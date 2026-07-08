@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Laboratory Requisition Form — Evergreen Secondary School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --pink: #ffb3c6;
+      --purple: #c9b8f0;
+      --teal: #b2e8e0;
+      --mint: #c3f0d4;
+      --yellow: #fff1b0;
+      --credit: #8b6fc7;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      padding: 16px;
+      line-height: 1.5
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto
+    }
+
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 4vw, 2.1rem);
+      text-align: center;
+      margin-bottom: 4px
+    }
+
+    .subtitle {
+      text-align: center;
+      font-weight: 700;
+      font-size: .95rem;
+      margin-bottom: 2px
+    }
+
+    .credit {
+      text-align: center;
+      font-style: italic;
+      color: var(--credit);
+      font-size: .8rem;
+      margin-bottom: 16px
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 18px
+    }
+
+    .card h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 12px
+    }
+
+    .sectA h2 {
+      background: var(--purple)
+    }
+
+    .sectB h2 {
+      background: var(--teal)
+    }
+
+    .sectC h2 {
+      background: var(--pink)
+    }
+
+    .sectD h2 {
+      background: var(--mint)
+    }
+
+    .sectE h2 {
+      background: var(--yellow)
+    }
+
+    .sectF h2 {
+      background: var(--purple)
+    }
+
+    .sectG h2 {
+      background: var(--teal)
+    }
+
+    label {
+      font-weight: 700;
+      font-size: .9rem;
+      display: block;
+      margin-bottom: 3px
+    }
+
+    input[type=text],
+    input[type=date],
+    input[type=time],
+    input[type=number],
+    select,
+    textarea {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      padding: 10px;
+      border: 2px solid #d8def0;
+      border-radius: 10px;
+      width: 100%;
+      min-height: 44px;
+      background: #fff;
+      color: var(--text)
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--purple)
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px
+    }
+
+    .row>div {
+      flex: 1;
+      min-width: 140px
+    }
+
+    .btn {
+      background: #fff;
+      border: 2px solid var(--purple);
+      box-shadow: 0 4px 0 var(--purple);
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      color: var(--text);
+      padding: 10px 20px;
+      cursor: pointer;
+      min-height: 44px;
+      transition: transform .05s, box-shadow .05s;
+      font-size: .95rem
+    }
+
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 var(--purple)
+    }
+
+    .btn.teal {
+      border-color: #7fd4c8;
+      box-shadow: 0 4px 0 #7fd4c8
+    }
+
+    .btn.teal:active {
+      box-shadow: 0 0 0 #7fd4c8
+    }
+
+    .btn.pink {
+      border-color: #f591ab;
+      box-shadow: 0 4px 0 #f591ab
+    }
+
+    .btn.pink:active {
+      box-shadow: 0 0 0 #f591ab
+    }
+
+    .btn.mint {
+      border-color: #8fdcae;
+      box-shadow: 0 4px 0 #8fdcae
+    }
+
+    .btn.mint:active {
+      box-shadow: 0 0 0 #8fdcae
+    }
+
+    .btn.yellow {
+      border-color: #e8d478;
+      box-shadow: 0 4px 0 #e8d478
+    }
+
+    .btn.yellow:active {
+      box-shadow: 0 0 0 #e8d478
+    }
+
+    .btn.small {
+      padding: 6px 12px;
+      min-height: 38px;
+      font-size: .85rem
+    }
+
+    .btn.danger {
+      border-color: #f0a0a0;
+      box-shadow: 0 4px 0 #f0a0a0;
+      color: #a33
+    }
+
+    .btn.danger:active {
+      box-shadow: 0 0 0 #f0a0a0
+    }
+
+    .btn.big {
+      font-size: 1.05rem;
+      padding: 14px 26px
+    }
+
+    .notice {
+      background: var(--yellow);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: .9rem;
+      margin-bottom: 12px
+    }
+
+    .warn {
+      background: #ffd9b3;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 800;
+      font-size: .9rem;
+      margin-bottom: 12px;
+      display: none
+    }
+
+    .session {
+      border: 2px solid var(--teal);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      position: relative
+    }
+
+    .session .del {
+      position: absolute;
+      top: 8px;
+      right: 8px
+    }
+
+    .session h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: .95rem;
+      margin-bottom: 10px
+    }
+
+    .chemItem {
+      border: 2px solid var(--mint);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px
+    }
+
+    .chemTop {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: flex-end
+    }
+
+    .chemTop .nm {
+      flex: 3;
+      min-width: 180px
+    }
+
+    .chemTop .qy {
+      flex: 2;
+      min-width: 140px
+    }
+
+    .calcPanel {
+      display: none;
+      background: #f4fbf6;
+      border: 2px dashed #8fdcae;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px
+    }
+
+    .calcPanel.open {
+      display: block
+    }
+
+    .calcGrid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px
+    }
+
+    .calcGrid>div {
+      flex: 1;
+      min-width: 130px
+    }
+
+    .results {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: .92rem;
+      border: 2px solid var(--mint)
+    }
+
+    .results strong {
+      font-weight: 800
+    }
+
+    .apGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 8px;
+      margin-bottom: 14px
+    }
+
+    .apChk {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fdfce9;
+      border: 2px solid #efe6a8;
+      border-radius: 10px;
+      padding: 8px 10px;
+      min-height: 44px;
+      cursor: pointer;
+      font-size: .9rem;
+      font-weight: 600
+    }
+
+    .apChk input {
+      width: 20px;
+      height: 20px;
+      min-height: 20px;
+      accent-color: var(--credit);
+      flex: none;
+      cursor: pointer
+    }
+
+    table.list {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .92rem
+    }
+
+    table.list th {
+      background: var(--yellow);
+      padding: 8px;
+      text-align: left;
+      border-bottom: 2px solid #e8d478;
+      font-size: .85rem
+    }
+
+    table.list td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle
+    }
+
+    table.list input[type=number] {
+      width: 80px;
+      min-height: 40px;
+      padding: 6px
+    }
+
+    table.list input[type=text] {
+      min-height: 40px;
+      padding: 6px
+    }
+
+    .tog {
+      display: flex;
+      gap: 8px
+    }
+
+    .tog button {
+      flex: 1;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 2px solid #d8def0;
+      background: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: .9rem
+    }
+
+    .tog button.yes.on {
+      background: var(--mint);
+      border-color: #8fdcae
+    }
+
+    .tog button.na.on {
+      background: var(--pink);
+      border-color: #f591ab
+    }
+
+    table.safety {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .92rem
+    }
+
+    table.safety th {
+      background: var(--purple);
+      padding: 8px;
+      text-align: left;
+      font-size: .85rem
+    }
+
+    table.safety td {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle
+    }
+
+    table.safety td:last-child {
+      width: 170px
+    }
+
+    .outBtns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 6px 0
+    }
+
+    .muted {
+      font-size: .82rem;
+      color: #666;
+      font-weight: 600
+    }
+
+    .pill {
+      display: inline-block;
+      background: var(--teal);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: .78rem;
+      font-weight: 800;
+      margin-left: 6px
+    }
+
+    @media(max-width:480px) {
+
+      .chemTop .nm,
+      .chemTop .qy {
+        flex: 1 1 100%
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>🧪 Science Laboratory Requisition Form</h1>
+    <div class="subtitle"> Evergreen Secondary School</div>
+
+    <!-- A: TEACHER & DATE -->
+    <div class="card sectA">
+      <h2>👩‍🏫 Teacher &amp; Submission</h2>
+      <div class="notice">Teachers who wish to use science apparatus and materials are required to complete this form at
+        least <u><b>THREE DAYS</b></u> prior to the date required.</div>
+      <div class="warn" id="threeDayWarn">⚠️ Heads up: your earliest session is fewer than three working days from the
+        submission date. The lab staff may not have enough preparation time.</div>
+      <div class="row">
+        <div><label for="teacherName">Name of teacher</label>
+          <select id="teacherName"
+            onchange="document.getElementById('teacherOther').style.display=this.value==='Other'?'block':'none'">
+            <option>Joan</option>
+            <option selected>Pris</option>
+            <option>Reeve</option>
+            <option>Xiao Hui</option>
+            <option>Zi Hui</option>
+            <option>Other</option>
+          </select>
+          <input type="text" id="teacherOther" placeholder="Enter name" style="display:none;margin-top:6px">
+        </div>
+        <div><label for="subDate">Date of submission</label><input type="date" id="subDate"></div>
+      </div>
+    </div>
+
+    <!-- B: SESSIONS -->
+    <div class="card sectB">
+      <h2>📅 Practical Sessions</h2>
+      <div id="sessions"></div>
+      <button class="btn teal" onclick="addSession()">➕ Add session</button>
+    </div>
+
+    <!-- C: EXPERIMENT -->
+    <div class="card sectC">
+      <h2>⚗️ Experiment Title</h2>
+      <div class="row">
+        <div><label for="selSyllabus">Syllabus</label>
+          <select id="selSyllabus" onchange="cascade()">
+            <option value="">— select —</option>
+            <option>6092</option>
+            <option>5086</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div><label for="selYear">Year</label>
+          <select id="selYear" onchange="cascade()">
+            <option value="">— select —</option>
+            <option>2014</option>
+            <option>2015</option>
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+            <option>2020</option>
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+            <option>2024</option>
+            <option>2025</option>
+            <option>2026</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div><label for="selTitle">Saved titles</label>
+          <select id="selTitle" onchange="titlePicked()">
+            <option value="">— none saved: type your own below —</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div style="flex:3"><label for="expTitle">Experiment title (as it will appear on the form)</label>
+          <input type="text" id="expTitle" placeholder="e.g. 2020 Pure Chemistry 'O' Level Science Practical">
+        </div>
+      </div>
+      <div class="row">
+        <div><label for="numCandidates">Number of candidates</label><input type="number" id="numCandidates" min="1"
+            value="40" oninput="recalcAll()"></div>
+        <div><label for="setsPerLab">Number of sets per lab</label><input type="number" id="setsPerLab" min="1"
+            value="40"></div>
+        <div><label for="pctExtra">Extra to prepare (%)</label><input type="number" id="pctExtra" min="0" value="10"
+            oninput="recalcAll()">
+          <span class="muted">Surplus buffer for the lab technician</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D: CHEMICALS -->
+    <div class="card sectD">
+      <h2>🧫 Requisition List — Chemicals</h2>
+      <div id="chemList"></div>
+      <button class="btn mint" onclick="addChem()">➕ Add chemical</button>
+    </div>
+
+    <!-- E: APPARATUS -->
+    <div class="card sectE">
+      <h2>🔬 Requisition List — Apparatus</h2>
+      <p class="muted" style="margin-bottom:8px">Tick standard apparatus (quantity defaults to 1 — edit in the table
+        below), or add your own item.</p>
+      <div class="apGrid" id="apGrid"></div>
+      <div class="row" style="align-items:flex-end">
+        <div style="flex:3"><label for="apCustomName">Apparatus not in the list</label><input type="text"
+            id="apCustomName" placeholder="e.g. Polystyrene cup with lid"></div>
+        <div style="flex:0"><button class="btn yellow" onclick="addCustomApparatus()">➕ Add</button></div>
+      </div>
+      <table class="list" id="apTable" style="margin-top:10px">
+        <thead>
+          <tr>
+            <th style="width:44px">S/no.</th>
+            <th>Apparatus</th>
+            <th style="width:110px">Qty (per set)</th>
+            <th style="width:60px"></th>
+          </tr>
+        </thead>
+        <tbody id="apBody"></tbody>
+      </table>
+    </div>
+
+    <!-- F: SAFETY -->
+    <div class="card sectF">
+      <h2>🦺 Safety Considerations &amp; Precautions</h2>
+      <table class="safety" id="safetyTable">
+        <thead>
+          <tr>
+            <th style="width:36px"></th>
+            <th>Safety considerations in carrying out experiment</th>
+            <th>Yes / Not applicable</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="row" style="margin-top:8px">
+        <div><label for="safetyOther">Others: please specify</label><input type="text" id="safetyOther"></div>
+      </div>
+      <table class="safety" id="precTable" style="margin-top:14px">
+        <thead>
+          <tr>
+            <th style="width:36px"></th>
+            <th>Precautions</th>
+            <th>Yes / Not applicable</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="row" style="margin-top:8px">
+        <div><label for="precOther">Others: please specify</label><input type="text" id="precOther"></div>
+      </div>
+    </div>
+
+    <!-- G: OUTPUT -->
+    <div class="card sectG">
+      <h2>📄 Generate</h2>
+      <div class="outBtns">
+        <button class="btn big teal" onclick="saveDoc()">💾 Save Word document</button>
+        <button class="btn big pink" onclick="printDoc()">🖨️ Print / PDF</button>
+      </div>
+      <p class="muted" style="text-align:center">The generated document uses the school's plain formal layout, ready for
+        the lab staff.</p>
+    </div>
+  </div>
+
+  <script>
+    /* ================= CONFIG — edit this block to customise ================= */
+    const LABS = ["Chem Lab 1", "Chem Lab 2"];
+
+    const APPARATUS_MASTER = [
+      "Beaker (250 cm³)", "Blue litmus paper", "Boiling tube", "Bunsen burner",
+      "Burette + burette clamp and stand", "Conical flask (250 cm³)", "Crucible + lid",
+      "Delivery tube (boiling-tube)", "Delivery tube (test-tube)", "Dropper / teat pipette",
+      "Electronic balance", "Evaporating dish", "Filter funnel", "Filter papers", "Glass rod",
+      "Heatproof mat", "Lighter", "Marker pen", "Measuring cylinder",
+      "Pipette (25.0 cm³) + pipette filler", "Red litmus paper", "Rubber stopper", "Spatula",
+      "Stopwatch", "Test tubes", "Test-tube holder", "Test-tube rack", "Thermometer", "Tongs",
+      "Tripod + wire gauze", "Wash bottle (distilled water)", "White tile", "Wooden splints"
+    ];
+
+    /* Experiment library: key = syllabus|year. Each entry autofills the form. */
+    const EXPERIMENT_LIBRARY = {
+      "5086|2014": [{
+        title: "2014 ‘O’ Level Science Practical",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "Standard reagents", qty: "", notes: "" },
+          { name: "Distilled water", qty: "", notes: "" },
+          { name: "Salt Q: Calcium Nitrate", qty: "1 vial/bench", notes: "" },
+          { name: "R: Calcium Hydroxide", qty: "1 btl/bench", notes: "Place 5 g into a 500 ml beaker and half fill the beaker with deionized water. Stir the suspension and pour into a 2.5L btl" },
+          { name: "Marble chips", qty: "10g/ student", notes: "" },
+          { name: "Aluminium foil (1 x 1cm)", qty: "1 vial/bench", notes: "" },
+          { name: "2cm clean magnesium ribbon", qty: "1 vial/bench", notes: "" },
+          { name: "Barium nitrate solution (0.1mol)", qty: "1 btl/bench", notes: "" },
+          { name: "Silver nitrate solution (0.05mol)", qty: "1 btl/bench", notes: "" },
+        ],
+        apparatus: [
+          ["Test tubes and a test tube rack", 1], ["Stopper for boiling-tube", 1], ["Droppers", 1], ["Spatula", 1], ["Delivery tube for boiling-tube", 1], ["Wooden splint", 1], ["Glass rod", 1], ["Red & blue litmus paper", 1], ["Bunsen burner & wire gauze", 1], ["Tripod stand", 1], ["Lighter", 1], ["Safety goggles", 1]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2015": [{
+        title: "2015 ‘O’ Level Science Practical",
+        candidates: 40, setsPerLab: 26,
+        chemicals: [
+          { name: "Bench reagents", qty: "", notes: "" },
+          { name: "Distilled water", qty: "", notes: "" },
+          { name: "solution X: 1 mol/dm3 Na2SO4", qty: "", notes: "" },
+          { name: "solution Y: 1 mol/dm3 Na2SO4 + 1 mol/dm3 Na2CO3", qty: "", notes: "" },
+          { name: "solution Z: 1 mol/dm3 Na2CO3", qty: "", notes: "" },
+          { name: "solution P: 0.5 mol/dm3 (NH4)2Fe(SO4)2", qty: "", notes: "" },
+          { name: "Barium nitrate solution (0.1mol)", qty: "", notes: "" },
+          { name: "Potassium managanate(VII)", qty: "", notes: "" },
+        ],
+        apparatus: [
+          ["Test tubes and a test tube rack", 1], ["10 ml measuring cylinder", 1], ["Droppers", 1], ["Wooden splint", 1], ["Glass rod", 1], ["Red & blue litmus paper", 1], ["Bunsen burner", 1], ["Lighter", 1], ["Safety goggles", 1]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2017": [{
+        title: "O level Sci(Chem) Paper 5 [2017]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "standard bench reagents", qty: "1 set", notes: "" },
+          { name: "Unknown X – aqueous sodium carbonate [0.5 mol/dm3]", qty: "", notes: "" },
+          { name: "Unknown Y – aqueous ammonium ferrous sulfate, (NH4)2Fe(SO4)2 [0.5 mol/dm3]", qty: "", notes: "" },
+        ],
+        apparatus: [
+          ["Test-tube racks", 1], ["Bunsen burner and lighter", 1], ["test-tube holder", 1], ["teat pipettes", 3], ["Boiling tubes", 2], ["test-tubes", 6], ["Red & blue litmus papers", 1], ["Wooden splint", 2], ["10 ml measuring cylinder", 1], ["100 ml beaker", 1], ["Filter Paper & Filter funnel", 1], ["Glass rod", 1], ["spatula", 1]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2018": [{
+        title: "O level Sci(Chem) Paper 5 [2018]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "Aqueous silver nitrate", qty: "", notes: "" },
+          { name: "standard bench reagents", qty: "1 set", notes: "" },
+          { name: "Solution Q – aqueous iron(III) nitrate", qty: "", notes: "" },
+          { name: "Solution R – aqueous sodium carbonate", qty: "", notes: "" },
+          { name: "Granulated zinc", qty: "3 pieces", notes: "" },
+          { name: "Aluminium foil", qty: "2 pieces", notes: "" },
+        ],
+        apparatus: [
+          ["Bunsen burner and lighter", 1], ["test-tube holder", 1], ["teat pipettes", 3], ["Boiling tubes", 2], ["test-tubes", 6], ["Red & blue litmus papers", 1], ["Wooden splint", 2], ["Test-tube racks", 2]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2019": [{
+        title: "O level Sci(Chem) Paper 5 [2019]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "standard bench reagents", qty: "", notes: "" },
+          { name: "Solution W – aqueous hydrogen peroxide", qty: "", notes: "" },
+          { name: "Solution X – aqueous potassium iodide", qty: "", notes: "" },
+          { name: "Solution Y – aqueous potassium manganate(VII)", qty: "", notes: "" },
+          { name: "Distilled water", qty: "", notes: "" },
+        ],
+        apparatus: [
+          ["Bunsen burner and lighter", 1], ["test-tube holder", 1], ["teat pipettes", 3], ["test-tubes", 6], ["Wooden splint", 2]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2020": [{
+        title: "O level Sci(Chem) Paper 5 [2020]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "standard bench reagents", qty: "", notes: "" },
+          { name: "Solution Q : cupric chloride – 85.2 g/L", qty: "", notes: "" },
+          { name: "Soution R1 – sodium bicarbonate : 16.8 g/L", qty: "", notes: "" },
+          { name: "Soution R2 – sodium bicarbonate : 8.4 g/L", qty: "", notes: "" },
+          { name: "Solution I – screened methyl orange : B121 Vial , 3ml student", qty: "", notes: "" },
+        ],
+        apparatus: [
+          ["Bunsen burner and lighter", 1], ["test tubes, one labelled as R1 and one labelled as R2", 7], ["teat pipettes", 6], ["Wooden splints", 1], ["Red and blue litmus papers", 1], ["10 ml measuring cylinders", 2], ["Glass rod", 1], ["Delivery tube (fitted for test-tube)", 1], ["Delivery tube (fitted for boiling tube)", 1], ["Boiling tube", 2], ["stopwatch", 1], ["Solid P : sodium hydrogen carbonate – blue spatula", 1]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2021": [{
+        title: "O level Sci(Chem) Paper 5 [2021]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "standard bench reagents", qty: "", notes: "" },
+          { name: "Solution S – Ammonium Iron(III) sulfate – 96.4g/l", qty: "30 ml", notes: "" },
+          { name: "Zinc powder", qty: "0.9g – 1.1g", notes: "" },
+        ],
+        apparatus: [
+          ["Bunsen burner and lighter", 1], ["test tubes", 6], ["teat pipettes", 6], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["10 ml measuring cylinders", 2], ["Glass rod", 1], ["Delivery tube (fitted for test-tube)", 1], ["Delivery tube (fitted for boiling tube)", 1], ["Boiling tube", 2], ["stopwatch", 1]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2022": [{
+        title: "O level Sci(Chem) Paper 5 [2022]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "Solution P (vial)", qty: "1", notes: "" },
+          { name: "Solution P (bottle)", qty: "1", notes: "" },
+          { name: "Solution Q (bottle)", qty: "1", notes: "" },
+        ],
+        apparatus: [
+          ["Bunsen burner and lighter", 1], ["test tubes", 6], ["teat pipettes", 6], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["25 ml measuring cylinders", 2], ["Glass rod", 1], ["Delivery tube (fitted for test-tube)", 1], ["Filter funnel", 1], ["burette", 1], ["pipette", 1], ["Conical flask", 2]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2023": [{
+        title: "O level Sci(Chem) Paper 5 [2023]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "B (vial)", qty: "1", notes: "" },
+          { name: "C (vial)", qty: "1", notes: "" },
+          { name: "HCl", qty: "1", notes: "" },
+        ],
+        apparatus: [
+          ["Bunsen burner and lighter", 1], ["test tubes", 6], ["teat pipettes", 6], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["Delivery tube (fitted for test-tube)", 1], ["Delivery tube (fitted for boiling tube)", 1], ["A – in two stoppered boiling tubes", 1]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "5086|2024": [{
+        title: "O level Sci(Chem) Paper 5 [2024]",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "W (mixture of 0.5mol /dm3 HCl and 0.5mol /dm3 HNO3)", qty: "1", notes: "" },
+          { name: "X (FeCl3)", qty: "1", notes: "" },
+          { name: "Y (KI)", qty: "1", notes: "" },
+          { name: "T (NaS2O3)", qty: "1", notes: "" },
+          { name: "S (starch solution)", qty: "1", notes: "" },
+        ],
+        apparatus: [
+          ["Bunsen burner and lighter", 1], ["test tubes", 3], ["boiling tube", 1], ["teat pipettes", 5], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["Glass rod", 1], ["Test-tube holder", 1], ["stopwatch", 1], ["Measuring cylinder (25 cm3)", 2]
+        ],
+        safety: [true, true, true, false, false, false],
+        precautions: [true, true, false, false]
+      }],
+      "6092|2020": [{
+        title: "2020 Pure Chemistry 'O' Level Science Practical",
+        candidates: 40, setsPerLab: 40,
+        chemicals: [
+          { name: "Dilute nitric acid (1 mol/dm³)", qty: "", notes: "" },
+          { name: "Dilute sodium hydroxide (1 mol/dm³)", qty: "", notes: "" },
+          { name: "Aqueous ammonia (1 mol/dm³)", qty: "", notes: "" },
+          { name: "Calcium hydroxide (limewater)", qty: "", notes: "" },
+          { name: "Aqueous barium nitrate (0.2 mol/dm³)", qty: "", notes: "" },
+          { name: "Aqueous silver nitrate (0.2 mol/dm³)", qty: "", notes: "" },
+          {
+            name: "P — 0.200 mol/dm³ sodium hydroxide", qty: "250 cm³ in 300 cm³ bottle per candidate",
+            notes: "NaOH: 8 g per 1 dm³ distilled water (240 g per 30 dm³)."
+          },
+          {
+            name: "Q — dilute hydrochloric acid", qty: "250 cm³ in 300 cm³ bottle per candidate",
+            notes: "Concentrated HCl stock: 12.4 cm³ per 1 dm³ distilled water (372 cm³ per 30 dm³)."
+          },
+          { name: "T — thymolphthalein indicator (B121 vial)", qty: "3 cm³ per vial", notes: "" },
+          {
+            name: "Unknown R (0.9 g to 1.1 g)", qty: "1 boiling tube per candidate",
+            notes: "R(a): 0.5 g CuSO₄. R(b): 0.5 g anhydrous Na₂CO₃. Mix R(a) and R(b) well. Stopper the boiling tube with a rubber stopper."
+          },
+          {
+            name: "Unknown S (2 g)", qty: "1 boiling tube per candidate",
+            notes: "S(a): 1 g NaCl. S(b): 1 g CuSO₄. Mix S(a) and S(b) well. Stopper the boiling tube with a rubber stopper."
+          }
+        ],
+        apparatus: [
+          ["Conical flask (250 cm³)", 2], ["Glass rod", 4], ["Filter funnel", 2],
+          ["Burette + burette clamp and stand", 1], ["Pipette (25.0 cm³) + pipette filler", 1], ["White tile", 1],
+          ["Boiling tube (containing and labelled R and S)", 2], ["Test tubes", 10], ["Test-tube rack", 1],
+          ["Dropper / teat pipette", 3], ["Test-tube holder", 1], ["Wooden splints", 2],
+          ["Red litmus paper", 1], ["Blue litmus paper", 1], ["Filter papers", 1], ["Lighter", 1], ["Marker pen", 1]
+        ],
+        safety: [true, true, true, false, false, false],  /* Yes = true, N.A. = false */
+        precautions: [true, true, false, false]
+      }]
+    };
+    /* ======================= end CONFIG ======================= */
+
+    const SAFETY_ITEMS = [
+      "The experiment involves heating using a Bunsen burner / hot plate.",
+      "The experiment involves the use of glassware.",
+      "The experiment involves the use of corrosive chemicals, e.g. acids / alkalis.",
+      "The experiment involves the emission of corrosive / irritant fumes.",
+      "The experiment involves the use of bio-hazardous materials, e.g. micro-organisms.",
+      "The experiment involves the use of an apparatus with sharp points or edges."
+    ];
+    const PREC_ITEMS = [
+      "Conduct a safety briefing at the start of the lesson.",
+      "Wearing of safety goggles.",
+      "Use of fume cupboards.",
+      "Use of gloves."
+    ];
+
+    const ATOMIC = {
+      H: 1.008, He: 4.003, Li: 6.94, Be: 9.012, B: 10.81, C: 12.011, N: 14.007, O: 15.999, F: 18.998,
+      Ne: 20.180, Na: 22.990, Mg: 24.305, Al: 26.982, Si: 28.085, P: 30.974, S: 32.06, Cl: 35.45, Ar: 39.948,
+      K: 39.098, Ca: 40.078, Cr: 51.996, Mn: 54.938, Fe: 55.845, Co: 58.933, Ni: 58.693, Cu: 63.546, Zn: 65.38,
+      Br: 79.904, Sr: 87.62, Ag: 107.87, Sn: 118.71, I: 126.90, Ba: 137.33, Pt: 195.08, Au: 196.97, Hg: 200.59, Pb: 207.2
+    };
+
+    /* ---------- molar mass parser (brackets + hydrates) ---------- */
+    function molarMass(formula) {
+      if (!formula) return null;
+      formula = formula.replace(/·/g, ".").replace(/\s+/g, "");
+      let total = 0;
+      for (const part of formula.split(".")) {
+        if (!part) continue;
+        const m = part.match(/^(\d+)(.*)$/);
+        let mult = 1, body = part;
+        if (m && m[2]) { mult = parseInt(m[1], 10); body = m[2]; }
+        const v = parseFragment(body);
+        if (v === null) return null;
+        total += mult * v;
+      }
+      return total > 0 ? total : null;
+    }
+    function parseFragment(s) {
+      let i = 0;
+      function walk() {
+        let sum = 0;
+        while (i < s.length) {
+          const c = s[i];
+          if (c === "(" || c === "[") {
+            i++; const inner = walk();
+            if (inner === null) return null;
+            let n = ""; while (i < s.length && /\d/.test(s[i])) n += s[i++];
+            sum += inner * (n ? parseInt(n, 10) : 1);
+          } else if (c === ")" || c === "]") { i++; return sum; }
+          else if (/[A-Z]/.test(c)) {
+            let sym = c; i++;
+            if (i < s.length && /[a-z]/.test(s[i])) sym += s[i++];
+            if (!(sym in ATOMIC)) return null;
+            let n = ""; while (i < s.length && /\d/.test(s[i])) n += s[i++];
+            sum += ATOMIC[sym] * (n ? parseInt(n, 10) : 1);
+          } else return null;
+        }
+        return sum;
+      }
+      const r = walk();
+      return (r === null || i < s.length) ? null : r;
+    }
+    function sf3(x) {
+      if (!isFinite(x)) return "—"; if (x === 0) return "0";
+      return Number(x.toPrecision(3)).toLocaleString("en-GB", { maximumFractionDigits: 4 });
+    }
+
+    /* ---------- Sessions ---------- */
+    const TIMES = ["07:50", "08:25", "09:00", "09:35", "10:10", "10:45", "11:20", "11:55", "12:30", "13:05", "13:40", "14:15", "14:50", "15:25"];
+    function timeOpts() { return `<option value="">— select —</option>` + TIMES.map(t => `<option>${t}</option>`).join("") + `<option>Other</option>`; }
+    function timeSel(sel) { sel.nextElementSibling.style.display = sel.value === "Other" ? "block" : "none"; }
+    function sTime(s, base) { const sel = s.querySelector("." + base + "Sel"); return sel.value === "Other" ? s.querySelector("." + base + "Other").value : sel.value; }
+    function sClassVal(s) { const lvl = s.querySelector(".sLevel").value; const cn = s.querySelector(".sClassName"); const name = cn.value === "Others" ? s.querySelector(".sClassOther").value : cn.value; return (lvl + " " + name).trim(); }
+    function teacherVal() { const v = document.getElementById("teacherName").value; return (v === "Other" ? document.getElementById("teacherOther").value : v).trim(); }
+    let sessionCount = 0;
+    function addSession(data) {
+      sessionCount++;
+      const d = document.createElement("div");
+      d.className = "session";
+      d.innerHTML = `
+   <button class="btn danger small del" onclick="this.parentElement.remove();renumberSessions();checkThreeDays()">✕</button>
+   <h3>Session <span class="snum"></span></h3>
+   <div class="row">
+     <div><label>Date</label><input type="date" class="sDate" onchange="checkThreeDays()"></div>
+     <div><label>Time (start)</label>
+       <select class="sStartSel" onchange="timeSel(this)">${timeOpts()}</select>
+       <input type="time" class="sStartOther" placeholder="Own timing" style="display:none;margin-top:6px"></div>
+     <div><label>Time (end)</label>
+       <select class="sEndSel" onchange="timeSel(this)">${timeOpts()}</select>
+       <input type="time" class="sEndOther" placeholder="Own timing" style="display:none;margin-top:6px"></div>
+   </div>
+   <div class="row">
+     <div><label>Class</label>
+       <div style="display:flex;gap:8px">
+         <select class="sLevel" style="flex:1"><option value="">Sec</option><option value="3">Sec 3</option><option value="4">Sec 4</option><option value="5">Sec 5</option></select>
+         <select class="sClassName" style="flex:1" onchange="var s=this.closest('.session');s.querySelector('.sClassOther').style.display=this.value==='Others'?'block':'none'"><option value="">Class</option><option>Rsp</option><option>Dyn</option><option>Others</option></select>
+       </div>
+       <input type="text" class="sClassOther" placeholder="Specify class" style="display:none;margin-top:6px"></div>
+     <div><label>Lab</label>
+       <select class="sLab" onchange="this.nextElementSibling.style.display=this.value==='Other'?'block':'none'">
+         ${LABS.map(l => `<option>${l}</option>`).join("")}<option>Other</option>
+       </select>
+       <input type="text" class="sLabOther" placeholder="Specify venue" style="display:none;margin-top:6px">
+     </div>
+   </div>`;
+      document.getElementById("sessions").appendChild(d);
+      if (data) { d.querySelector(".sDate").value = data.date || ""; }
+      renumberSessions();
+    }
+    function renumberSessions() {
+      document.querySelectorAll("#sessions .session").forEach((s, i) => s.querySelector(".snum").textContent = i + 1);
+    }
+    function checkThreeDays() {
+      const sub = document.getElementById("subDate").value;
+      const dates = [...document.querySelectorAll(".sDate")].map(i => i.value).filter(Boolean);
+      const w = document.getElementById("threeDayWarn");
+      if (!sub || !dates.length) { w.style.display = "none"; return; }
+      const earliest = dates.sort()[0];
+      const diff = (new Date(earliest) - new Date(sub)) / 86400000;
+      w.style.display = diff < 3 ? "block" : "none";
+    }
+
+    /* ---------- Experiment cascade ---------- */
+    function cascade() {
+      const key = document.getElementById("selSyllabus").value + "|" + document.getElementById("selYear").value;
+      const sel = document.getElementById("selTitle");
+      const list = EXPERIMENT_LIBRARY[key] || [];
+      sel.innerHTML = list.length
+        ? `<option value="">— select a saved title —</option>` + list.map((e, i) => `<option value="${i}">${e.title}</option>`).join("")
+        : `<option value="">— none saved: type your own below —</option>`;
+    }
+    function titlePicked() {
+      const key = document.getElementById("selSyllabus").value + "|" + document.getElementById("selYear").value;
+      const idx = document.getElementById("selTitle").value;
+      if (idx === "") return;
+      const exp = (EXPERIMENT_LIBRARY[key] || [])[Number(idx)];
+      if (!exp) return;
+      const hasContent = document.querySelectorAll("#chemList .chemItem").length > 0 || document.querySelectorAll("#apBody tr").length > 0;
+      if (hasContent && !confirm("Loading this saved experiment will replace the current chemicals and apparatus lists. Continue?")) return;
+      loadExperiment(exp);
+    }
+    function loadExperiment(exp) {
+      document.getElementById("expTitle").value = exp.title;
+      document.getElementById("numCandidates").value = exp.candidates;
+      document.getElementById("setsPerLab").value = exp.setsPerLab;
+      document.getElementById("chemList").innerHTML = "";
+      exp.chemicals.forEach(c => addChem(c));
+      document.getElementById("apBody").innerHTML = "";
+      document.querySelectorAll("#apGrid input").forEach(cb => cb.checked = false);
+      exp.apparatus.forEach(([name, qty]) => {
+        addApparatusRow(name, qty);
+        const cb = [...document.querySelectorAll("#apGrid input")].find(c => c.dataset.name === name);
+        if (cb) cb.checked = true;
+      });
+      exp.safety.forEach((v, i) => setToggle("saf", i, v));
+      exp.precautions.forEach((v, i) => setToggle("prec", i, v));
+      recalcAll();
+    }
+
+    /* ---------- Chemicals ---------- */
+    let chemId = 0;
+    function addChem(data) {
+      chemId++;
+      const d = document.createElement("div");
+      d.className = "chemItem"; d.dataset.id = chemId;
+      d.innerHTML = `
+   <div class="chemTop">
+     <div class="nm"><label>Chemical / solution</label><input type="text" class="cName" placeholder="e.g. Dilute hydrochloric acid (1 mol/dm³)"></div>
+     <div class="qy"><label>Qty / container</label><input type="text" class="cQty" placeholder="e.g. 250 cm³ per candidate"></div>
+     <div><button class="btn mint small" onclick="toggleCalc(this)">🧮 Prep calc</button></div>
+     <div><button class="btn danger small" onclick="this.closest('.chemItem').remove()">✕</button></div>
+   </div>
+   <div style="margin-top:8px"><label>Preparation notes (carried into the Word document)</label>
+     <textarea class="cNotes" placeholder="e.g. dilution recipe, labelling, stoppering instructions"></textarea></div>
+   <div class="calcPanel">
+     <div class="calcGrid">
+       <div><label>Mode</label>
+         <select class="pMode" onchange="modeSwap(this);recalcRow(this)">
+           <option value="solid">Solid — weigh from concentration</option>
+           <option value="stock">Liquid stock — dilution</option>
+         </select></div>
+       <div class="onlySolid"><label>Formula</label><input type="text" class="pFormula" placeholder="e.g. CuSO4.5H2O" oninput="recalcRow(this)"></div>
+       <div class="onlySolid"><label>Mr (auto — editable)</label><input type="number" class="pMr" step="0.01" oninput="this.dataset.manual=1;recalcRow(this)"></div>
+       <div class="onlySolid"><label>Concentration</label><input type="number" class="pConc" step="any" min="0" oninput="recalcRow(this)"></div>
+       <div class="onlySolid"><label>Unit</label>
+         <select class="pUnit" onchange="recalcRow(this)"><option value="mol">mol/dm³</option><option value="g">g/dm³</option></select></div>
+       <div class="onlyStock" style="display:none"><label>Stock per dm³ (cm³)</label><input type="number" class="pStock" step="any" min="0" oninput="recalcRow(this)"></div>
+       <div><label>Volume per candidate (cm³)</label><input type="number" class="pVolCand" step="any" min="0" oninput="recalcRow(this)"></div>
+       <div><label>Candidates (override)</label><input type="number" class="pCand" min="1" placeholder="global" oninput="recalcRow(this)"></div>
+     </div>
+     <div class="results">Enter values above to see the preparation summary.</div>
+     <div style="margin-top:8px"><button class="btn yellow small" onclick="copyCalc(this)">📋 Copy summary into notes</button></div>
+   </div>`;
+      document.getElementById("chemList").appendChild(d);
+      if (data) {
+        d.querySelector(".cName").value = data.name || "";
+        d.querySelector(".cQty").value = data.qty || "";
+        d.querySelector(".cNotes").value = data.notes || "";
+      }
+    }
+    function toggleCalc(btn) { btn.closest(".chemItem").querySelector(".calcPanel").classList.toggle("open"); }
+    function modeSwap(sel) {
+      const p = sel.closest(".calcPanel"), stock = sel.value === "stock";
+      p.querySelectorAll(".onlySolid").forEach(e => e.style.display = stock ? "none" : "block");
+      p.querySelectorAll(".onlyStock").forEach(e => e.style.display = stock ? "block" : "none");
+    }
+    function recalcRow(el) {
+      const p = el.closest(".calcPanel");
+      const mode = p.querySelector(".pMode").value;
+      const volCand = parseFloat(p.querySelector(".pVolCand").value);
+      const candOv = parseFloat(p.querySelector(".pCand").value);
+      const cand = isFinite(candOv) && candOv > 0 ? candOv : parseFloat(document.getElementById("numCandidates").value) || 0;
+      const extra = (parseFloat(document.getElementById("pctExtra").value) || 0) / 100;
+      const res = p.querySelector(".results");
+      let out = "", store = "";
+      const totalCm3 = isFinite(volCand) ? volCand * cand : NaN;
+      const prepCm3 = totalCm3 * (1 + extra);
+      const prepDm3 = prepCm3 / 1000;
+      if (mode === "solid") {
+        const fEl = p.querySelector(".pFormula"), mrEl = p.querySelector(".pMr");
+        if (!mrEl.dataset.manual) {
+          const mr = molarMass(fEl.value);
+          mrEl.value = mr ? mr.toFixed(2) : "";
+        }
+        const Mr = parseFloat(mrEl.value);
+        const conc = parseFloat(p.querySelector(".pConc").value);
+        const unit = p.querySelector(".pUnit").value;
+        if (isFinite(conc) && (unit === "g" || isFinite(Mr))) {
+          const gPerDm3 = unit === "mol" ? conc * Mr : conc;
+          out += `<div>Mass per dm³: <strong>${sf3(gPerDm3)} g/dm³</strong>${unit === "mol" ? ` (Mr = ${sf3(Mr)})` : ""}</div>`;
+          if (isFinite(totalCm3) && cand > 0) {
+            out += `<div>Total volume: ${sf3(volCand)} cm³ × ${cand} candidates = <strong>${sf3(totalCm3)} cm³</strong>` +
+              (extra > 0 ? ` → +${(extra * 100).toFixed(0)}% extra = <strong>${sf3(prepCm3)} cm³ (${sf3(prepDm3)} dm³)</strong>` : ` (${sf3(totalCm3 / 1000)} dm³)`) + `</div>`;
+            const mass = gPerDm3 * (extra > 0 ? prepDm3 : totalCm3 / 1000);
+            out += `<div>Mass to weigh: <strong>${sf3(mass)} g</strong></div>`;
+            store = `Prep: ${conc} ${unit === "mol" ? "mol/dm³" : "g/dm³"}${unit === "mol" ? ` (Mr = ${sf3(Mr)})` : ""} → ${sf3(gPerDm3)} g per dm³. ` +
+              `${sf3(volCand)} cm³ × ${cand} candidates${extra > 0 ? ` + ${(extra * 100).toFixed(0)}% extra` : ""} = ${sf3(extra > 0 ? prepCm3 : totalCm3)} cm³ ` +
+              `(${sf3(extra > 0 ? prepDm3 : totalCm3 / 1000)} dm³) → weigh ${sf3(mass)} g.`;
+          }
+        }
+      } else {
+        const stock = parseFloat(p.querySelector(".pStock").value);
+        if (isFinite(stock)) {
+          out += `<div>Stock: <strong>${sf3(stock)} cm³ per dm³</strong> of solution</div>`;
+          if (isFinite(totalCm3) && cand > 0) {
+            out += `<div>Total solution: ${sf3(volCand)} cm³ × ${cand} candidates = <strong>${sf3(totalCm3)} cm³</strong>` +
+              (extra > 0 ? ` → +${(extra * 100).toFixed(0)}% extra = <strong>${sf3(prepCm3)} cm³ (${sf3(prepDm3)} dm³)</strong>` : ` (${sf3(totalCm3 / 1000)} dm³)`) + `</div>`;
+            const stockNeeded = stock * (extra > 0 ? prepDm3 : totalCm3 / 1000);
+            out += `<div>Stock to measure: <strong>${sf3(stockNeeded)} cm³</strong>, then make up to volume with distilled water</div>`;
+            store = `Prep (dilution): ${sf3(stock)} cm³ stock per dm³. ` +
+              `${sf3(volCand)} cm³ × ${cand} candidates${extra > 0 ? ` + ${(extra * 100).toFixed(0)}% extra` : ""} = ${sf3(extra > 0 ? prepCm3 : totalCm3)} cm³ ` +
+              `(${sf3(extra > 0 ? prepDm3 : totalCm3 / 1000)} dm³) → measure ${sf3(stockNeeded)} cm³ of stock, make up to volume with distilled water.`;
+          }
+        }
+      }
+      res.innerHTML = out || "Enter values above to see the preparation summary.";
+      res.dataset.store = store;
+    }
+    function copyCalc(btn) {
+      const p = btn.closest(".calcPanel");
+      const s = p.querySelector(".results").dataset.store;
+      if (!s) { alert("Complete the calculator inputs first."); return; }
+      const notes = btn.closest(".chemItem").querySelector(".cNotes");
+      notes.value = (notes.value ? notes.value.trim() + "\n" : "") + s;
+    }
+    function recalcAll() { document.querySelectorAll(".calcPanel .pMode").forEach(m => recalcRow(m)); }
+
+    /* ---------- Apparatus ---------- */
+    function buildApparatusGrid() {
+      const g = document.getElementById("apGrid");
+      APPARATUS_MASTER.forEach(name => {
+        const l = document.createElement("label");
+        l.className = "apChk";
+        l.innerHTML = `<input type="checkbox" data-name="${name}"> ${name}`;
+        l.querySelector("input").addEventListener("change", e => {
+          if (e.target.checked) addApparatusRow(name, 1);
+          else removeApparatusRow(name);
+        });
+        g.appendChild(l);
+      });
+    }
+    function addApparatusRow(name, qty) {
+      const tr = document.createElement("tr");
+      tr.dataset.name = name;
+      let nameCell;
+      if (name === "Measuring cylinder") {
+        nameCell = `<td><input type="text" value="Measuring cylinder (25 ml)">
+      <select onchange="this.previousElementSibling.value='Measuring cylinder ('+this.value+')'" style="margin-top:4px;min-height:38px">
+        <option>10 ml</option><option selected>25 ml</option><option>50 ml</option><option>100 ml</option>
+      </select></td>`;
+      } else {
+        nameCell = `<td><input type="text" value="${name.replace(/"/g, "&quot;")}"></td>`;
+      }
+      tr.innerHTML = `<td class="sn"></td>
+   ${nameCell}
+   <td><input type="number" min="1" value="${qty || 1}"></td>
+   <td><button class="btn danger small" onclick="removeApRow(this)">✕</button></td>`;
+      document.getElementById("apBody").appendChild(tr);
+      renumberApparatus();
+    }
+    function removeApparatusRow(name) {
+      const tr = [...document.querySelectorAll("#apBody tr")].find(r => r.dataset.name === name);
+      if (tr) tr.remove();
+      renumberApparatus();
+    }
+    function removeApRow(btn) {
+      const tr = btn.closest("tr");
+      const cb = [...document.querySelectorAll("#apGrid input")].find(c => c.dataset.name === tr.dataset.name);
+      if (cb) cb.checked = false;
+      tr.remove(); renumberApparatus();
+    }
+    function addCustomApparatus() {
+      const inp = document.getElementById("apCustomName");
+      const v = inp.value.trim();
+      if (!v) { alert("Type the apparatus name first."); return; }
+      addApparatusRow(v, 1); inp.value = "";
+    }
+    function renumberApparatus() {
+      document.querySelectorAll("#apBody tr .sn").forEach((c, i) => c.textContent = (i + 1) + ".");
+    }
+
+    /* ---------- Safety toggles ---------- */
+    function buildSafetyTables() {
+      const sb = document.querySelector("#safetyTable tbody");
+      SAFETY_ITEMS.forEach((t, i) => {
+        sb.insertAdjacentHTML("beforeend",
+          `<tr><td>${i + 1}</td><td>${t}</td><td><div class="tog" data-group="saf${i}">
+      <button class="yes" onclick="tapToggle(this)">Yes</button><button class="na" onclick="tapToggle(this)">N.A.</button></div></td></tr>`);
+      });
+      const pb = document.querySelector("#precTable tbody");
+      PREC_ITEMS.forEach((t, i) => {
+        pb.insertAdjacentHTML("beforeend",
+          `<tr><td>${i + 1}</td><td>${t}</td><td><div class="tog" data-group="prec${i}">
+      <button class="yes" onclick="tapToggle(this)">Yes</button><button class="na" onclick="tapToggle(this)">N.A.</button></div></td></tr>`);
+      });
+    }
+    function tapToggle(btn) {
+      btn.parentElement.querySelectorAll("button").forEach(b => b.classList.remove("on"));
+      btn.classList.add("on");
+    }
+    function setToggle(prefix, i, yes) {
+      const g = document.querySelector(`.tog[data-group="${prefix}${i}"]`);
+      if (!g) return;
+      g.querySelectorAll("button").forEach(b => b.classList.remove("on"));
+      g.querySelector(yes ? ".yes" : ".na").classList.add("on");
+    }
+    function getToggle(prefix, i) {
+      const g = document.querySelector(`.tog[data-group="${prefix}${i}"]`);
+      if (g.querySelector(".yes").classList.contains("on")) return "yes";
+      if (g.querySelector(".na").classList.contains("on")) return "na";
+      return "";
+    }
+
+    /* ---------- Gather + validate ---------- */
+    function gather() {
+      const sessions = [...document.querySelectorAll("#sessions .session")].map(s => {
+        const lab = s.querySelector(".sLab").value;
+        return {
+          date: s.querySelector(".sDate").value,
+          start: sTime(s, "sStart"), end: sTime(s, "sEnd"),
+          cls: sClassVal(s),
+          lab: lab === "Other" ? s.querySelector(".sLabOther").value.trim() : lab
+        };
+      });
+      const chems = [...document.querySelectorAll("#chemList .chemItem")].map(c => ({
+        name: c.querySelector(".cName").value.trim(),
+        qty: c.querySelector(".cQty").value.trim(),
+        notes: c.querySelector(".cNotes").value.trim()
+      })).filter(c => c.name);
+      const apparatus = [...document.querySelectorAll("#apBody tr")].map(r => ({
+        name: r.querySelector("td:nth-child(2) input").value.trim(),
+        qty: r.querySelector("td:nth-child(3) input").value
+      })).filter(a => a.name);
+      return {
+        teacher: teacherVal(),
+        subDate: document.getElementById("subDate").value,
+        sessions, title: document.getElementById("expTitle").value.trim(),
+        candidates: document.getElementById("numCandidates").value,
+        setsPerLab: document.getElementById("setsPerLab").value,
+        chems, apparatus,
+        safety: SAFETY_ITEMS.map((_, i) => getToggle("saf", i)),
+        precautions: PREC_ITEMS.map((_, i) => getToggle("prec", i)),
+        safetyOther: document.getElementById("safetyOther").value.trim(),
+        precOther: document.getElementById("precOther").value.trim()
+      };
+    }
+    function validate(d) {
+      const w = [];
+      if (!d.sessions.length || !d.sessions.some(s => s.date)) w.push("• No session dates entered");
+      if (!d.title) w.push("• Experiment title is empty");
+      if (!d.chems.length && !d.apparatus.length) w.push("• Both requisition lists are empty");
+      if (d.safety.some(v => !v)) w.push("• Some safety consideration rows are untouched");
+      if (d.precautions.some(v => !v)) w.push("• Some precaution rows are untouched");
+      if (w.length) return confirm("Before generating, please note:\n\n" + w.join("\n") + "\n\nGenerate anyway?");
+      return true;
+    }
+
+    /* ---------- Document builder (plain formal layout) ---------- */
+    function fmtDate(iso) {
+      if (!iso) return "";
+      const [y, m, d] = iso.split("-");
+      return `${d}/${m}/${y}`;
+    }
+    function fmtTime(t) { return t ? t.replace(":", "") : ""; }
+    function esc(s) { return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+    function nl2br(s) { return esc(s).replace(/\n/g, "<br>"); }
+
+    function buildDocHTML(d) {
+      const css = `body{font-family:Arial,Helvetica,sans-serif;font-size:11pt;color:#000;margin:24pt}
+   h1,h2{text-align:center;margin:0}
+   h1{font-size:14pt} h2{font-size:13pt;margin-bottom:10pt}
+   table{border-collapse:collapse;width:100%;margin-bottom:10pt}
+   td,th{border:1px solid #000;padding:4pt 6pt;font-size:10.5pt;vertical-align:top}
+   .noborder td{border:none;padding:2pt 4pt}
+   .notice{font-size:10.5pt;margin:6pt 0 10pt}
+   .lbl{font-weight:bold;width:90pt}
+   .sig{margin-top:24pt;font-size:10.5pt}
+   .small{font-size:9.5pt}`;
+      const sess = d.sessions.filter(s => s.date || s.cls || s.lab || s.start);
+      const sessCols = sess.length || 1;
+      const sessRow = (label, fn) => `<tr><td class="lbl">${label}</td>${(sess.length ? sess : [{}]).map(s => `<td>${esc(fn(s))}</td>`).join("")}</tr>`;
+      const chemRows = d.chems.map((c, i) => `<tr><td style="width:30pt">${i + 1}.</td>
+    <td>${esc(c.name)}${c.notes ? `<br><span class="small">${nl2br(c.notes)}</span>` : ""}</td>
+    <td style="width:110pt">${esc(c.qty)}</td></tr>`).join("");
+      const apRows = d.apparatus.map((a, i) => `<tr><td style="width:30pt">${i + 1}.</td>
+    <td>${esc(a.name)}</td><td style="width:110pt">${esc(a.qty)}</td></tr>`).join("");
+      const box = v => v === "yes" ? "☒" : v === "na" ? "☐" : "☐";
+      const boxNA = v => v === "na" ? "☒" : "☐";
+      const safRows = SAFETY_ITEMS.map((t, i) => `<tr><td style="width:24pt">${i + 1}</td><td>${t}</td>
+    <td style="width:40pt;text-align:center">${box(d.safety[i])}</td>
+    <td style="width:70pt;text-align:center">${boxNA(d.safety[i])}</td></tr>`).join("") +
+        `<tr><td>${SAFETY_ITEMS.length + 1}</td><td colspan="3">Others: please specify — ${esc(d.safetyOther) || "—"}</td></tr>`;
+      const precRows = PREC_ITEMS.map((t, i) => `<tr><td style="width:24pt">${i + 1}</td><td>${t}</td>
+    <td style="width:40pt;text-align:center">${box(d.precautions[i])}</td>
+    <td style="width:70pt;text-align:center">${boxNA(d.precautions[i])}</td></tr>`).join("") +
+        `<tr><td>${PREC_ITEMS.length + 1}</td><td colspan="3">Others: please specify — ${esc(d.precOther) || "—"}</td></tr>`;
+      return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+<head><meta charset="utf-8"><title>Science Laboratory Requisition Form</title><style>${css}</style></head>
+<body>
+<h1>EVERGREEN SECONDARY SCHOOL</h1>
+<h2>Science Laboratory Requisition Form</h2>
+<table class="noborder"><tr>
+  <td class="lbl">Name of Teacher:</td><td>${esc(d.teacher)}</td>
+  <td class="lbl">Date:</td><td>${fmtDate(d.subDate)}</td></tr></table>
+<p class="notice">Teachers who wish to use science apparatus and materials are required to complete this form at least <b><u>THREE DAYS</u></b> prior to the date required.</p>
+<table>${sessRow("Date", s => fmtDate(s.date))}${sessRow("Time", s => s.start || s.end ? `${fmtTime(s.start)} – ${fmtTime(s.end)}` : "")}
+${sessRow("Class", s => s.cls)}${sessRow("Lab", s => s.lab)}</table>
+<table><tr><td class="lbl">Experiment Title</td>
+  <td>${esc(d.title)}<br><span class="small">(number of candidates: ${esc(d.candidates)} &nbsp;|&nbsp; number of sets per lab: ${esc(d.setsPerLab)})</span></td></tr></table>
+${chemRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Chemicals required</th><th style="width:110pt">Qty</th></tr>${chemRows}</table>` : ""}
+${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</th><th style="width:110pt">Qty (per set)</th></tr>${apRows}</table>` : ""}
+<table><tr><th style="width:24pt"></th><th>Safety considerations in carrying out experiment</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${safRows}</table>
+<table><tr><th style="width:24pt"></th><th>Precautions</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${precRows}</table>
+<p class="sig">Signature of Teacher : ..............................&nbsp;&nbsp;&nbsp;
+Date received: .................&nbsp;&nbsp;&nbsp; Date prepared: .................<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(By laboratory staff)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(By laboratory staff)</p>
+</body></html>`;
+    }
+
+    function saveDoc() {
+      const d = gather();
+      if (!validate(d)) return;
+      const html = buildDocHTML(d);
+      const blob = new Blob(["\ufeff" + html], { type: "application/msword" });
+      const a = document.createElement("a");
+      const firstDate = d.sessions.map(s => s.date).filter(Boolean).sort()[0] || d.subDate || "draft";
+      const cls = (d.sessions[0] && d.sessions[0].cls ? d.sessions[0].cls.replace(/\s+/g, "") : "");
+      a.href = URL.createObjectURL(blob);
+      a.download = `Req_form_${firstDate}${cls ? "_" + cls : ""}.doc`;
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    }
+    function printDoc() {
+      const d = gather();
+      if (!validate(d)) return;
+      const w = window.open("", "_blank");
+      if (!w) { alert("Please allow pop-ups to use Print / PDF."); return; }
+      w.document.write(buildDocHTML(d));
+      w.document.close();
+      w.onload = () => w.print();
+      setTimeout(() => { try { w.print() } catch (e) { } }, 600);
+    }
+
+    /* ---------- Init ---------- */
+    document.getElementById("subDate").value = new Date().toISOString().slice(0, 10);
+    document.getElementById("subDate").addEventListener("change", checkThreeDays);
+    buildApparatusGrid();
+    buildSafetyTables();
+    addSession();
+    addChem();
+    cascade();
+  </script>
+</body>
+
+</html>
