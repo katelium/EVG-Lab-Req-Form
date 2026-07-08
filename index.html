@@ -1406,6 +1406,7 @@
    .notice{font-size:10.5pt;margin:2pt 0}
    .lbl{font-weight:bold;width:90pt}
    .sig{margin-top:12pt;font-size:10.5pt}
+   .gap{margin:0;font-size:11pt;line-height:1.2}
    .small{font-size:9.5pt}`;
       const sess = d.sessions.filter(s => s.date || s.cls || s.lab || s.start);
       const sessCols = sess.length || 1;
@@ -1436,10 +1437,14 @@
 <p class="notice">Teachers who wish to use science apparatus and materials are required to complete this form at least <b><u>THREE DAYS</u></b> prior to the date required.</p>
 <table>${sessRow("Date", s => fmtDate(s.date))}${sessRow("Time", s => s.start || s.end ? `${fmtTime(s.start)} – ${fmtTime(s.end)}` : "")}
 ${sessRow("Class", s => s.cls)}${sessRow("Lab", s => s.lab)}${sessRow("Teacher", s => s.teacher)}</table>
+<p class="gap">&nbsp;</p>
 <table><tr><td class="lbl">Experiment Title</td>
   <td>${esc(d.title)}<br><span class="small">(number of candidates: ${esc(d.candidates)} &nbsp;|&nbsp; number of sets per lab: ${esc(d.setsPerLab)})</span></td></tr></table>
-${chemRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Chemicals required</th><th style="width:110pt">Qty</th></tr>${chemRows}</table>` : ""}
-${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</th><th style="width:110pt">Qty (per set)</th></tr>${apRows}</table>` : ""}
+<p class="gap">&nbsp;</p>
+${chemRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Chemicals required</th><th style="width:110pt">Qty</th></tr>${chemRows}</table>
+<p class="gap">&nbsp;</p>` : ""}
+${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</th><th style="width:110pt">Qty (per set)</th></tr>${apRows}</table>
+<p class="gap">&nbsp;</p>` : ""}
 <table><tr><th style="width:24pt"></th><th>Safety considerations in carrying out experiment</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${safRows}</table>
 <table><tr><th style="width:24pt"></th><th>Precautions</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${precRows}</table>
 <table class="sigbox" style="margin-top:18pt">
