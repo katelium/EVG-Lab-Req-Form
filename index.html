@@ -1406,7 +1406,7 @@
    .notice{font-size:10.5pt;margin:2pt 0}
    .lbl{font-weight:bold;width:90pt}
    .sig{margin-top:12pt;font-size:10.5pt}
-   .gap{margin:0;font-size:11pt;line-height:1.2}
+   .gap{margin:0;font-size:9pt;line-height:1}
    .small{font-size:9.5pt}`;
       const sess = d.sessions.filter(s => s.date || s.cls || s.lab || s.start);
       const sessCols = sess.length || 1;
@@ -1447,7 +1447,8 @@ ${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</
 <p class="gap">&nbsp;</p>` : ""}
 <table><tr><th style="width:24pt"></th><th>Safety considerations in carrying out experiment</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${safRows}</table>
 <table><tr><th style="width:24pt"></th><th>Precautions</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${precRows}</table>
-<table class="sigbox" style="margin-top:18pt">
+<p class="gap">&nbsp;</p>
+<table class="sigbox">
   <tr>
     <td style="width:60%;height:64pt;vertical-align:top"><b>Signature of Teacher</b>${d.signature ? `<br><img src="${d.signature}" style="height:52pt;max-width:96%"/>` : ""}</td>
     <td style="width:40%;height:64pt;vertical-align:top"><b>Date</b><br>${fmtDate(d.subDate)}</td>
