@@ -1395,14 +1395,17 @@
 
     function buildDocHTML(d) {
       const css = `body{font-family:Arial,Helvetica,sans-serif;font-size:11pt;color:#000;margin:24pt}
+   *{margin-top:0;margin-bottom:0}
+   p{margin:0;mso-margin-top-alt:0;mso-margin-bottom-alt:0;line-height:1.15}
    h1,h2{text-align:center;margin:0}
-   h1{font-size:14pt} h2{font-size:13pt;margin-bottom:10pt}
-   table{border-collapse:collapse;width:100%;margin-bottom:10pt}
-   td,th{border:1px solid #000;padding:4pt 6pt;font-size:10.5pt;vertical-align:top}
-   .noborder td{border:none;padding:2pt 4pt}
-   .notice{font-size:10.5pt;margin:6pt 0 10pt}
+   h1{font-size:14pt} h2{font-size:13pt;margin-bottom:2pt}
+   table{border-collapse:collapse;width:100%;margin:0 0 2pt 0}
+   td,th{border:1px solid #000;padding:2pt 6pt;font-size:10.5pt;vertical-align:top;mso-margin-bottom-alt:0}
+   td p,th p{margin:0;mso-margin-bottom-alt:0}
+   .noborder td{border:none;padding:1pt 4pt}
+   .notice{font-size:10.5pt;margin:2pt 0}
    .lbl{font-weight:bold;width:90pt}
-   .sig{margin-top:24pt;font-size:10.5pt}
+   .sig{margin-top:12pt;font-size:10.5pt}
    .small{font-size:9.5pt}`;
       const sess = d.sessions.filter(s => s.date || s.cls || s.lab || s.start);
       const sessCols = sess.length || 1;
