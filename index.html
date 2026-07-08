@@ -508,6 +508,7 @@
     <!-- B: SESSIONS -->
     <div class="card sectB">
       <h2>📅 Practical Sessions</h2>
+      <p style="margin-bottom:10px"><a href="https://docs.google.com/spreadsheets/d/1PLG_f79lYRGGGvOx5Dywy69P6X055eFliZj9kgci-2M/edit?gid=6#gid=6" target="_blank" rel="noopener" style="font-size:.9rem;font-weight:700;color:var(--credit);text-decoration:none">🗓️ Check lab booking schedule ↗</a></p>
       <div id="sessions"></div>
       <button class="btn teal" onclick="addSession()">➕ Add session</button>
     </div>
@@ -627,6 +628,14 @@
       </div>
     </div>
 
+    <!-- F2: SIGNATURE -->
+    <div class="card sectA">
+      <h2>✍️ Teacher's Signature</h2>
+      <p class="muted" style="margin-bottom:8px">Sign in the box below using your mouse, trackpad, or a stylus / Apple Pencil on a touchscreen. Your signature will be embedded into the generated Word document.</p>
+      <canvas id="sigPad" style="border:2px solid #d8def0;border-radius:12px;background:#fff;touch-action:none;width:100%;max-width:560px;height:160px;display:block;cursor:crosshair"></canvas>
+      <div style="margin-top:8px"><button class="btn small danger" onclick="clearSig()">🗑️ Clear signature</button></div>
+    </div>
+
     <!-- G: OUTPUT -->
     <div class="card sectG">
       <h2>📄 Generate</h2>
@@ -636,6 +645,13 @@
       </div>
       <p class="muted" style="text-align:center">The generated document uses the school's plain formal layout, ready for
         the lab staff.</p>
+      <hr style="border:none;border-top:2px dashed #d8def0;margin:14px 0">
+      <p class="muted" style="text-align:center;margin-bottom:8px">Save your entries as a draft file to reopen or share later.</p>
+      <div class="outBtns">
+        <button class="btn mint" onclick="saveInput()">📥 Save input (draft)</button>
+        <button class="btn yellow" onclick="document.getElementById('loadInputFile').click()">📂 Load saved input</button>
+        <input type="file" id="loadInputFile" accept=".json" style="display:none" onchange="loadInput(this)">
+      </div>
     </div>
   </div>
 
@@ -644,14 +660,15 @@
     const LABS = ["Chem Lab 1", "Chem Lab 2"];
 
     const APPARATUS_MASTER = [
-      "Beaker (250 cm³)", "Blue litmus paper", "Boiling tube", "Bunsen burner",
+      "Beaker (250 cm³)", "Boiling tube", "Bunsen burner",
       "Burette + burette clamp and stand", "Conical flask (250 cm³)", "Crucible + lid",
       "Delivery tube (boiling-tube)", "Delivery tube (test-tube)", "Dropper / teat pipette",
       "Electronic balance", "Evaporating dish", "Filter funnel", "Filter papers", "Glass rod",
       "Heatproof mat", "Lighter", "Marker pen", "Measuring cylinder",
-      "Pipette (25.0 cm³) + pipette filler", "Red litmus paper", "Rubber stopper", "Spatula",
-      "Stopwatch", "Test tubes", "Test-tube holder", "Test-tube rack", "Thermometer", "Tongs",
-      "Tripod + wire gauze", "Wash bottle (distilled water)", "White tile", "Wooden splints"
+      "Pipette (25.0 cm³) + pipette filler", "Polystyrene cup", "Red and blue litmus paper",
+      "Rubber stopper", "Spatula", "Stopwatch", "Test tubes", "Test-tube holder", "Test-tube rack",
+      "Thermometer", "Tongs", "Tripod + wire gauze", "Wash bottle (distilled water)", "White tile",
+      "Wooden splints"
     ];
 
     /* Experiment library: key = syllabus|year. Each entry autofills the form. */
@@ -1241,9 +1258,110 @@
         safety: SAFETY_ITEMS.map((_, i) => getToggle("saf", i)),
         precautions: PREC_ITEMS.map((_, i) => getToggle("prec", i)),
         safetyOther: document.getElementById("safetyOther").value.trim(),
-        precOther: document.getElementById("precOther").value.trim()
+        precOther: document.getElementById("precOther").value.trim(),
+        signature: sigDataURL()
       };
     }
+    /* ---------- Save / Load teacher input (draft) ---------- */
+    function serializeForm() {
+      return {
+        _type: "EVG-lab-req-draft", _v: 1,
+        teacher: document.getElementById("teacherName").value,
+        teacherOther: document.getElementById("teacherOther").value,
+        subDate: document.getElementById("subDate").value,
+        syllabus: document.getElementById("selSyllabus").value,
+        year: document.getElementById("selYear").value,
+        title: document.getElementById("expTitle").value,
+        candidates: document.getElementById("numCandidates").value,
+        setsPerLab: document.getElementById("setsPerLab").value,
+        sessions: [...document.querySelectorAll("#sessions .session")].map(s => ({
+          date: s.querySelector(".sDate").value,
+          startSel: s.querySelector(".sStartSel").value, startOther: s.querySelector(".sStartOther").value,
+          endSel: s.querySelector(".sEndSel").value, endOther: s.querySelector(".sEndOther").value,
+          level: s.querySelector(".sLevel").value, className: s.querySelector(".sClassName").value, classOther: s.querySelector(".sClassOther").value,
+          lab: s.querySelector(".sLab").value, labOther: s.querySelector(".sLabOther").value
+        })),
+        chems: [...document.querySelectorAll("#chemList .chemItem")].map(c => ({
+          name: c.querySelector(".cName").value, qty: c.querySelector(".cQty").value, notes: c.querySelector(".cNotes").value
+        })),
+        apparatus: [...document.querySelectorAll("#apBody tr")].map(r => [r.querySelector("td:nth-child(2) input").value, r.querySelector("td:nth-child(3) input").value]),
+        safety: SAFETY_ITEMS.map((_, i) => getToggle("saf", i)),
+        precautions: PREC_ITEMS.map((_, i) => getToggle("prec", i)),
+        safetyOther: document.getElementById("safetyOther").value,
+        precOther: document.getElementById("precOther").value,
+        signature: sigDataURL()
+      };
+    }
+    function fillSession(el, ss) {
+      el.querySelector(".sDate").value = ss.date || "";
+      const setSel = (cls, val, otherCls, other) => {
+        const sel = el.querySelector("." + cls); if (sel) sel.value = val || "";
+        const o = el.querySelector("." + otherCls);
+        if (o) { o.value = other || ""; o.style.display = (val === "Other" || val === "Others") ? "block" : "none"; }
+      };
+      setSel("sStartSel", ss.startSel, "sStartOther", ss.startOther);
+      setSel("sEndSel", ss.endSel, "sEndOther", ss.endOther);
+      const lvl = el.querySelector(".sLevel"); if (lvl) lvl.value = ss.level || "";
+      setSel("sClassName", ss.className, "sClassOther", ss.classOther);
+      setSel("sLab", ss.lab, "sLabOther", ss.labOther);
+    }
+    function restoreForm(d) {
+      const tSel = document.getElementById("teacherName");
+      tSel.value = d.teacher || "Pris";
+      document.getElementById("teacherOther").value = d.teacherOther || "";
+      document.getElementById("teacherOther").style.display = tSel.value === "Other" ? "block" : "none";
+      document.getElementById("subDate").value = d.subDate || "";
+      document.getElementById("selSyllabus").value = d.syllabus || "";
+      document.getElementById("selYear").value = d.year || "";
+      cascade();
+      document.getElementById("expTitle").value = d.title || "";
+      document.getElementById("numCandidates").value = d.candidates || 40;
+      document.getElementById("setsPerLab").value = d.setsPerLab || 40;
+      document.getElementById("sessions").innerHTML = "";
+      (d.sessions && d.sessions.length ? d.sessions : [{}]).forEach(ss => {
+        addSession(); fillSession(document.querySelector("#sessions .session:last-child"), ss);
+      });
+      document.getElementById("chemList").innerHTML = "";
+      (d.chems || []).forEach(c => addChem(c));
+      document.getElementById("apBody").innerHTML = "";
+      document.querySelectorAll("#apGrid input").forEach(cb => cb.checked = false);
+      (d.apparatus || []).forEach(a => {
+        const name = Array.isArray(a) ? a[0] : a.name, qty = Array.isArray(a) ? a[1] : a.qty;
+        addApparatusRow(name, qty);
+        const cb = [...document.querySelectorAll("#apGrid input")].find(c => c.dataset.name === name);
+        if (cb) cb.checked = true;
+      });
+      (d.safety || []).forEach((v, i) => { if (v) setToggle("saf", i, v === "yes"); });
+      (d.precautions || []).forEach((v, i) => { if (v) setToggle("prec", i, v === "yes"); });
+      document.getElementById("safetyOther").value = d.safetyOther || "";
+      document.getElementById("precOther").value = d.precOther || "";
+      setSigFromDataURL(d.signature || "");
+      recalcAll(); checkThreeDays();
+    }
+    function saveInput() {
+      const data = serializeForm();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      const dt = data.subDate || new Date().toISOString().slice(0, 10);
+      a.href = URL.createObjectURL(blob);
+      a.download = `LabReq_draft_${(data.teacher || "draft")}_${dt}.json`.replace(/\s+/g, "");
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
+    }
+    function loadInput(input) {
+      const f = input.files[0]; if (!f) return;
+      const r = new FileReader();
+      r.onload = e => {
+        try {
+          const d = JSON.parse(e.target.result);
+          if (d._type !== "EVG-lab-req-draft" && !confirm("This file doesn't look like a saved Lab Requisition draft. Load anyway?")) { input.value = ""; return; }
+          restoreForm(d);
+          alert("Saved input loaded successfully.");
+        } catch (err) { alert("Sorry, this file could not be read: " + err.message); }
+        input.value = "";
+      };
+      r.readAsText(f);
+    }
+
     function validate(d) {
       const w = [];
       if (!d.sessions.length || !d.sessions.some(s => s.date)) w.push("• No session dates entered");
@@ -1311,9 +1429,18 @@ ${chemRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Chemicals required
 ${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</th><th style="width:110pt">Qty (per set)</th></tr>${apRows}</table>` : ""}
 <table><tr><th style="width:24pt"></th><th>Safety considerations in carrying out experiment</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${safRows}</table>
 <table><tr><th style="width:24pt"></th><th>Precautions</th><th style="width:40pt">Yes</th><th style="width:70pt">Not applicable</th></tr>${precRows}</table>
-<p class="sig">Signature of Teacher : ..............................&nbsp;&nbsp;&nbsp;
-Date received: .................&nbsp;&nbsp;&nbsp; Date prepared: .................<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(By laboratory staff)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(By laboratory staff)</p>
+<table class="sigbox" style="margin-top:18pt">
+  <tr>
+    <td style="width:60%;height:64pt;vertical-align:top"><b>Signature of Teacher</b>${d.signature ? `<br><img src="${d.signature}" style="height:52pt;max-width:96%"/>` : ""}</td>
+    <td style="width:40%;height:64pt;vertical-align:top"><b>Date</b><br>${fmtDate(d.subDate)}</td>
+  </tr>
+</table>
+<table class="sigbox">
+  <tr>
+    <td style="width:50%;height:48pt;vertical-align:top">Date received<br><span class="small">(By laboratory staff)</span></td>
+    <td style="width:50%;height:48pt;vertical-align:top">Date prepared<br><span class="small">(By laboratory staff)</span></td>
+  </tr>
+</table>
 </body></html>`;
     }
 
@@ -1341,6 +1468,35 @@ Date received: .................&nbsp;&nbsp;&nbsp; Date prepared: ..............
       setTimeout(() => { try { w.print() } catch (e) { } }, 600);
     }
 
+    /* ---------- Signature pad (mouse / stylus / Apple Pencil) ---------- */
+    let sigCtx = null, sigDrawing = false, sigHasInk = false;
+    function initSig() {
+      const c = document.getElementById("sigPad");
+      const rect = c.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      c.width = Math.round(rect.width * dpr);
+      c.height = Math.round(rect.height * dpr);
+      sigCtx = c.getContext("2d");
+      sigCtx.scale(dpr, dpr);
+      sigCtx.lineWidth = 2.2; sigCtx.lineCap = "round"; sigCtx.lineJoin = "round"; sigCtx.strokeStyle = "#111";
+      const pos = e => { const r = c.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+      c.addEventListener("pointerdown", e => { sigDrawing = true; sigHasInk = true; c.setPointerCapture(e.pointerId); const p = pos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x, p.y); e.preventDefault(); });
+      c.addEventListener("pointermove", e => { if (!sigDrawing) return; const p = pos(e); sigCtx.lineTo(p.x, p.y); sigCtx.stroke(); e.preventDefault(); });
+      const stop = () => { sigDrawing = false; };
+      c.addEventListener("pointerup", stop);
+      c.addEventListener("pointercancel", stop);
+      c.addEventListener("pointerleave", stop);
+    }
+    function clearSig() { if (!sigCtx) return; const c = document.getElementById("sigPad"); sigCtx.clearRect(0, 0, c.width, c.height); sigHasInk = false; }
+    function sigDataURL() { return sigHasInk ? document.getElementById("sigPad").toDataURL("image/png") : ""; }
+    function setSigFromDataURL(url) {
+      const c = document.getElementById("sigPad"); clearSig();
+      if (!url) return;
+      const img = new Image();
+      img.onload = () => { const r = c.getBoundingClientRect(); sigCtx.drawImage(img, 0, 0, r.width, r.height); sigHasInk = true; };
+      img.src = url;
+    }
+
     /* ---------- Init ---------- */
     document.getElementById("subDate").value = new Date().toISOString().slice(0, 10);
     document.getElementById("subDate").addEventListener("change", checkThreeDays);
@@ -1349,6 +1505,7 @@ Date received: .................&nbsp;&nbsp;&nbsp; Date prepared: ..............
     addSession();
     addChem();
     cascade();
+    initSig();
   </script>
 </body>
 
