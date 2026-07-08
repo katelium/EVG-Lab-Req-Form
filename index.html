@@ -948,6 +948,7 @@
     function timeSel(sel) { sel.nextElementSibling.style.display = sel.value === "Other" ? "block" : "none"; }
     function sTime(s, base) { const sel = s.querySelector("." + base + "Sel"); return sel.value === "Other" ? s.querySelector("." + base + "Other").value : sel.value; }
     function sClassVal(s) { const lvl = s.querySelector(".sLevel").value; const cn = s.querySelector(".sClassName"); const name = cn.value === "Others" ? s.querySelector(".sClassOther").value : cn.value; return (lvl + " " + name).trim(); }
+    function sTeacherVal(s) { const sel = s.querySelector(".sTeacher"); return (sel.value === "Other" ? s.querySelector(".sTeacherOther").value : sel.value).trim(); }
     function teacherVal() { const v = document.getElementById("teacherName").value; return (v === "Other" ? document.getElementById("teacherOther").value : v).trim(); }
     let sessionCount = 0;
     function addSession(data) {
@@ -978,6 +979,12 @@
          ${LABS.map(l => `<option>${l}</option>`).join("")}<option>Other</option>
        </select>
        <input type="text" class="sLabOther" placeholder="Specify venue" style="display:none;margin-top:6px">
+     </div>
+     <div><label>Teacher</label>
+       <select class="sTeacher" onchange="var s=this.closest('.session');s.querySelector('.sTeacherOther').style.display=this.value==='Other'?'block':'none'">
+         <option>Joan</option><option selected>Pris</option><option>Reeve</option><option>Xiao Hui</option><option>Zi Hui</option><option>Other</option>
+       </select>
+       <input type="text" class="sTeacherOther" placeholder="Enter name" style="display:none;margin-top:6px">
      </div>
    </div>`;
       document.getElementById("sessions").appendChild(d);
@@ -1236,7 +1243,8 @@
           date: s.querySelector(".sDate").value,
           start: sTime(s, "sStart"), end: sTime(s, "sEnd"),
           cls: sClassVal(s),
-          lab: lab === "Other" ? s.querySelector(".sLabOther").value.trim() : lab
+          lab: lab === "Other" ? s.querySelector(".sLabOther").value.trim() : lab,
+          teacher: sTeacherVal(s)
         };
       });
       const chems = [...document.querySelectorAll("#chemList .chemItem")].map(c => ({
@@ -1279,7 +1287,8 @@
           startSel: s.querySelector(".sStartSel").value, startOther: s.querySelector(".sStartOther").value,
           endSel: s.querySelector(".sEndSel").value, endOther: s.querySelector(".sEndOther").value,
           level: s.querySelector(".sLevel").value, className: s.querySelector(".sClassName").value, classOther: s.querySelector(".sClassOther").value,
-          lab: s.querySelector(".sLab").value, labOther: s.querySelector(".sLabOther").value
+          lab: s.querySelector(".sLab").value, labOther: s.querySelector(".sLabOther").value,
+          teacher: s.querySelector(".sTeacher").value, teacherOther: s.querySelector(".sTeacherOther").value
         })),
         chems: [...document.querySelectorAll("#chemList .chemItem")].map(c => ({
           name: c.querySelector(".cName").value, qty: c.querySelector(".cQty").value, notes: c.querySelector(".cNotes").value
@@ -1304,6 +1313,7 @@
       const lvl = el.querySelector(".sLevel"); if (lvl) lvl.value = ss.level || "";
       setSel("sClassName", ss.className, "sClassOther", ss.classOther);
       setSel("sLab", ss.lab, "sLabOther", ss.labOther);
+      setSel("sTeacher", ss.teacher, "sTeacherOther", ss.teacherOther);
     }
     function restoreForm(d) {
       const tSel = document.getElementById("teacherName");
@@ -1422,7 +1432,7 @@
   <td class="lbl">Date:</td><td>${fmtDate(d.subDate)}</td></tr></table>
 <p class="notice">Teachers who wish to use science apparatus and materials are required to complete this form at least <b><u>THREE DAYS</u></b> prior to the date required.</p>
 <table>${sessRow("Date", s => fmtDate(s.date))}${sessRow("Time", s => s.start || s.end ? `${fmtTime(s.start)} – ${fmtTime(s.end)}` : "")}
-${sessRow("Class", s => s.cls)}${sessRow("Lab", s => s.lab)}</table>
+${sessRow("Class", s => s.cls)}${sessRow("Lab", s => s.lab)}${sessRow("Teacher", s => s.teacher)}</table>
 <table><tr><td class="lbl">Experiment Title</td>
   <td>${esc(d.title)}<br><span class="small">(number of candidates: ${esc(d.candidates)} &nbsp;|&nbsp; number of sets per lab: ${esc(d.setsPerLab)})</span></td></tr></table>
 ${chemRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Chemicals required</th><th style="width:110pt">Qty</th></tr>${chemRows}</table>` : ""}
