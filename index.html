@@ -5,6 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Science Laboratory Requisition Form — Evergreen Secondary School</title>
+  <meta name="description" content="Interactive Science Laboratory Requisition Form for Evergreen Secondary School — plan practical sessions, list chemicals and apparatus, note safety considerations, sign, and generate a ready-to-submit Word document.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://evg-lab-req.netlify.app/">
+  <meta property="og:title" content="Science Laboratory Requisition Form — Evergreen Secondary School">
+  <meta property="og:description" content="Plan practical sessions, list chemicals and apparatus, note safety considerations, sign, and generate a ready-to-submit Word document.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Science Laboratory Requisition Form — Evergreen Secondary School">
+  <meta name="twitter:description" content="Plan practical sessions, list chemicals and apparatus, note safety considerations, sign, and generate a ready-to-submit Word document.">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap"
     rel="stylesheet">
   <style>
@@ -1504,28 +1512,3 @@ ${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</
       const stop = () => { sigDrawing = false; };
       c.addEventListener("pointerup", stop);
       c.addEventListener("pointercancel", stop);
-      c.addEventListener("pointerleave", stop);
-    }
-    function clearSig() { if (!sigCtx) return; const c = document.getElementById("sigPad"); sigCtx.clearRect(0, 0, c.width, c.height); sigHasInk = false; }
-    function sigDataURL() { return sigHasInk ? document.getElementById("sigPad").toDataURL("image/png") : ""; }
-    function setSigFromDataURL(url) {
-      const c = document.getElementById("sigPad"); clearSig();
-      if (!url) return;
-      const img = new Image();
-      img.onload = () => { const r = c.getBoundingClientRect(); sigCtx.drawImage(img, 0, 0, r.width, r.height); sigHasInk = true; };
-      img.src = url;
-    }
-
-    /* ---------- Init ---------- */
-    document.getElementById("subDate").value = new Date().toISOString().slice(0, 10);
-    document.getElementById("subDate").addEventListener("change", checkThreeDays);
-    buildApparatusGrid();
-    buildSafetyTables();
-    addSession();
-    addChem();
-    cascade();
-    initSig();
-  </script>
-</body>
-
-</html>
