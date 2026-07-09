@@ -564,19 +564,24 @@
       </div>
       <div class="row">
         <div><label for="numCandidates">Number of candidates</label><input type="number" id="numCandidates" min="1"
-            value="40" oninput="recalcAll()"></div>
+            value="40"></div>
         <div><label for="setsPerLab">Number of sets per lab</label><input type="number" id="setsPerLab" min="1"
             value="40"></div>
-        <div><label for="pctExtra">Extra to prepare (%)</label><input type="number" id="pctExtra" min="0" value="10"
-            oninput="recalcAll()">
-          <span class="muted">Surplus buffer for the lab technician</span>
-        </div>
       </div>
     </div>
 
     <!-- D: CHEMICALS -->
     <div class="card sectD">
       <h2>🧫 Requisition List — Chemicals</h2>
+      <h3 style="font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:6px">Communal bench reagents</h3>
+      <p class="muted" style="margin-bottom:8px">Tick the reagents provided at the communal bench. Concentrations are pre-filled with the usual values — change any if needed.</p>
+      <table class="list" id="benchTable">
+        <thead>
+          <tr><th style="width:44px">Use</th><th>Reagent</th><th style="width:210px">Concentration</th></tr>
+        </thead>
+        <tbody id="benchBody"></tbody>
+      </table>
+      <h3 style="font-family:'Fredoka One',cursive;font-size:1rem;margin:16px 0 8px">Other chemicals / solutions</h3>
       <div id="chemList"></div>
       <button class="btn mint" onclick="addChem()">➕ Add chemical</button>
     </div>
@@ -678,6 +683,29 @@
       "Thermometer", "Tongs", "Tripod + wire gauze", "Wash bottle (distilled water)", "White tile",
       "Wooden splints"
     ];
+
+    /* Communal bench reagents — name, chemical formula, default concentration, and whether it takes the mol/dm³ unit */
+    const BENCH_REAGENTS = [
+      { name: "dilute hydrochloric acid", formula: "HCl", conc: "2", molar: true },
+      { name: "dilute nitric acid", formula: "HNO3", conc: "1", molar: true },
+      { name: "dilute sulfuric acid", formula: "H2SO4", conc: "0.5", molar: true },
+      { name: "aqueous sodium hydroxide", formula: "NaOH", conc: "1", molar: true },
+      { name: "aqueous ammonia (freshly prepared)", formula: "NH3", conc: "1", molar: true },
+      { name: "limewater (freshly prepared and saturated)", formula: "Ca(OH)2", conc: "saturated", molar: false },
+      { name: "aqueous barium nitrate", formula: "Ba(NO3)2", conc: "0.2", molar: true },
+      { name: "aqueous silver nitrate", formula: "AgNO3", conc: "0.05", molar: true },
+      { name: "aqueous potassium manganate(VII)", formula: "KMnO4", conc: "0.02", molar: true },
+      { name: "aluminium foil", formula: "Al", conc: "1 cm × 1 cm", molar: false }
+    ];
+    /* Subscript the digits in a chemical formula (e.g. H2SO4 → H₂SO₄), leaving units like cm³/dm³ alone. */
+    function subFormula(s) {
+      return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/([A-Za-z\)\]])(\d+)/g, (m, pre, dig, off, full) => {
+          const before = full.slice(0, off + 1).toLowerCase();
+          if (/(^|[^a-z])(c?m|dm)$/.test(before)) return m; // skip cm3 / dm3 / m3
+          return pre + "<sub>" + dig + "</sub>";
+        });
+    }
 
     /* Experiment library: key = syllabus|year. Each entry autofills the form. */
     const EXPERIMENT_LIBRARY = {
@@ -1059,30 +1087,10 @@
    <div class="chemTop">
      <div class="nm"><label>Chemical / solution</label><input type="text" class="cName" placeholder="e.g. Dilute hydrochloric acid (1 mol/dm³)"></div>
      <div class="qy"><label>Qty / container</label><input type="text" class="cQty" placeholder="e.g. 250 cm³ per candidate"></div>
-     <div><button class="btn mint small" onclick="toggleCalc(this)">🧮 Prep calc</button></div>
      <div><button class="btn danger small" onclick="this.closest('.chemItem').remove()">✕</button></div>
    </div>
    <div style="margin-top:8px"><label>Preparation notes (carried into the Word document)</label>
-     <textarea class="cNotes" placeholder="e.g. dilution recipe, labelling, stoppering instructions"></textarea></div>
-   <div class="calcPanel">
-     <div class="calcGrid">
-       <div><label>Mode</label>
-         <select class="pMode" onchange="modeSwap(this);recalcRow(this)">
-           <option value="solid">Solid — weigh from concentration</option>
-           <option value="stock">Liquid stock — dilution</option>
-         </select></div>
-       <div class="onlySolid"><label>Formula</label><input type="text" class="pFormula" placeholder="e.g. CuSO4.5H2O" oninput="recalcRow(this)"></div>
-       <div class="onlySolid"><label>Mr (auto — editable)</label><input type="number" class="pMr" step="0.01" oninput="this.dataset.manual=1;recalcRow(this)"></div>
-       <div class="onlySolid"><label>Concentration</label><input type="number" class="pConc" step="any" min="0" oninput="recalcRow(this)"></div>
-       <div class="onlySolid"><label>Unit</label>
-         <select class="pUnit" onchange="recalcRow(this)"><option value="mol">mol/dm³</option><option value="g">g/dm³</option></select></div>
-       <div class="onlyStock" style="display:none"><label>Stock per dm³ (cm³)</label><input type="number" class="pStock" step="any" min="0" oninput="recalcRow(this)"></div>
-       <div><label>Volume per candidate (cm³)</label><input type="number" class="pVolCand" step="any" min="0" oninput="recalcRow(this)"></div>
-       <div><label>Candidates (override)</label><input type="number" class="pCand" min="1" placeholder="global" oninput="recalcRow(this)"></div>
-     </div>
-     <div class="results">Enter values above to see the preparation summary.</div>
-     <div style="margin-top:8px"><button class="btn yellow small" onclick="copyCalc(this)">📋 Copy summary into notes</button></div>
-   </div>`;
+     <textarea class="cNotes" placeholder="e.g. dilution recipe, labelling, stoppering instructions"></textarea></div>`;
       document.getElementById("chemList").appendChild(d);
       if (data) {
         d.querySelector(".cName").value = data.name || "";
@@ -1090,72 +1098,16 @@
         d.querySelector(".cNotes").value = data.notes || "";
       }
     }
-    function toggleCalc(btn) { btn.closest(".chemItem").querySelector(".calcPanel").classList.toggle("open"); }
-    function modeSwap(sel) {
-      const p = sel.closest(".calcPanel"), stock = sel.value === "stock";
-      p.querySelectorAll(".onlySolid").forEach(e => e.style.display = stock ? "none" : "block");
-      p.querySelectorAll(".onlyStock").forEach(e => e.style.display = stock ? "block" : "none");
+    function recalcAll() { }
+
+    /* ---------- Communal bench reagents ---------- */
+    function buildBench() {
+      document.getElementById("benchBody").innerHTML = BENCH_REAGENTS.map((r, i) => `<tr data-i="${i}">
+     <td style="text-align:center"><input type="checkbox" class="benchUse" checked style="width:20px;height:20px;accent-color:var(--credit)"></td>
+     <td>${r.name} (${subFormula(r.formula)})</td>
+     <td><input type="text" class="benchConc" value="${r.conc.replace(/"/g, "&quot;")}" style="width:110px;min-height:38px;padding:6px;display:inline-block">${r.molar ? ' <span class="muted">mol/dm³</span>' : ""}</td>
+   </tr>`).join("");
     }
-    function recalcRow(el) {
-      const p = el.closest(".calcPanel");
-      const mode = p.querySelector(".pMode").value;
-      const volCand = parseFloat(p.querySelector(".pVolCand").value);
-      const candOv = parseFloat(p.querySelector(".pCand").value);
-      const cand = isFinite(candOv) && candOv > 0 ? candOv : parseFloat(document.getElementById("numCandidates").value) || 0;
-      const extra = (parseFloat(document.getElementById("pctExtra").value) || 0) / 100;
-      const res = p.querySelector(".results");
-      let out = "", store = "";
-      const totalCm3 = isFinite(volCand) ? volCand * cand : NaN;
-      const prepCm3 = totalCm3 * (1 + extra);
-      const prepDm3 = prepCm3 / 1000;
-      if (mode === "solid") {
-        const fEl = p.querySelector(".pFormula"), mrEl = p.querySelector(".pMr");
-        if (!mrEl.dataset.manual) {
-          const mr = molarMass(fEl.value);
-          mrEl.value = mr ? mr.toFixed(2) : "";
-        }
-        const Mr = parseFloat(mrEl.value);
-        const conc = parseFloat(p.querySelector(".pConc").value);
-        const unit = p.querySelector(".pUnit").value;
-        if (isFinite(conc) && (unit === "g" || isFinite(Mr))) {
-          const gPerDm3 = unit === "mol" ? conc * Mr : conc;
-          out += `<div>Mass per dm³: <strong>${sf3(gPerDm3)} g/dm³</strong>${unit === "mol" ? ` (Mr = ${sf3(Mr)})` : ""}</div>`;
-          if (isFinite(totalCm3) && cand > 0) {
-            out += `<div>Total volume: ${sf3(volCand)} cm³ × ${cand} candidates = <strong>${sf3(totalCm3)} cm³</strong>` +
-              (extra > 0 ? ` → +${(extra * 100).toFixed(0)}% extra = <strong>${sf3(prepCm3)} cm³ (${sf3(prepDm3)} dm³)</strong>` : ` (${sf3(totalCm3 / 1000)} dm³)`) + `</div>`;
-            const mass = gPerDm3 * (extra > 0 ? prepDm3 : totalCm3 / 1000);
-            out += `<div>Mass to weigh: <strong>${sf3(mass)} g</strong></div>`;
-            store = `Prep: ${conc} ${unit === "mol" ? "mol/dm³" : "g/dm³"}${unit === "mol" ? ` (Mr = ${sf3(Mr)})` : ""} → ${sf3(gPerDm3)} g per dm³. ` +
-              `${sf3(volCand)} cm³ × ${cand} candidates${extra > 0 ? ` + ${(extra * 100).toFixed(0)}% extra` : ""} = ${sf3(extra > 0 ? prepCm3 : totalCm3)} cm³ ` +
-              `(${sf3(extra > 0 ? prepDm3 : totalCm3 / 1000)} dm³) → weigh ${sf3(mass)} g.`;
-          }
-        }
-      } else {
-        const stock = parseFloat(p.querySelector(".pStock").value);
-        if (isFinite(stock)) {
-          out += `<div>Stock: <strong>${sf3(stock)} cm³ per dm³</strong> of solution</div>`;
-          if (isFinite(totalCm3) && cand > 0) {
-            out += `<div>Total solution: ${sf3(volCand)} cm³ × ${cand} candidates = <strong>${sf3(totalCm3)} cm³</strong>` +
-              (extra > 0 ? ` → +${(extra * 100).toFixed(0)}% extra = <strong>${sf3(prepCm3)} cm³ (${sf3(prepDm3)} dm³)</strong>` : ` (${sf3(totalCm3 / 1000)} dm³)`) + `</div>`;
-            const stockNeeded = stock * (extra > 0 ? prepDm3 : totalCm3 / 1000);
-            out += `<div>Stock to measure: <strong>${sf3(stockNeeded)} cm³</strong>, then make up to volume with distilled water</div>`;
-            store = `Prep (dilution): ${sf3(stock)} cm³ stock per dm³. ` +
-              `${sf3(volCand)} cm³ × ${cand} candidates${extra > 0 ? ` + ${(extra * 100).toFixed(0)}% extra` : ""} = ${sf3(extra > 0 ? prepCm3 : totalCm3)} cm³ ` +
-              `(${sf3(extra > 0 ? prepDm3 : totalCm3 / 1000)} dm³) → measure ${sf3(stockNeeded)} cm³ of stock, make up to volume with distilled water.`;
-          }
-        }
-      }
-      res.innerHTML = out || "Enter values above to see the preparation summary.";
-      res.dataset.store = store;
-    }
-    function copyCalc(btn) {
-      const p = btn.closest(".calcPanel");
-      const s = p.querySelector(".results").dataset.store;
-      if (!s) { alert("Complete the calculator inputs first."); return; }
-      const notes = btn.closest(".chemItem").querySelector(".cNotes");
-      notes.value = (notes.value ? notes.value.trim() + "\n" : "") + s;
-    }
-    function recalcAll() { document.querySelectorAll(".calcPanel .pMode").forEach(m => recalcRow(m)); }
 
     /* ---------- Apparatus ---------- */
     function buildApparatusGrid() {
@@ -1264,8 +1216,13 @@
         name: r.querySelector("td:nth-child(2) input").value.trim(),
         qty: r.querySelector("td:nth-child(3) input").value
       })).filter(a => a.name);
+      const bench = [...document.querySelectorAll("#benchBody tr")].map(tr => {
+        const i = +tr.dataset.i, r = BENCH_REAGENTS[i];
+        return { use: tr.querySelector(".benchUse").checked, name: r.name, formula: r.formula, molar: r.molar, conc: tr.querySelector(".benchConc").value.trim() };
+      });
       return {
         teacher: teacherVal(),
+        bench,
         subDate: document.getElementById("subDate").value,
         sessions, title: document.getElementById("expTitle").value.trim(),
         candidates: document.getElementById("numCandidates").value,
@@ -1298,6 +1255,7 @@
           lab: s.querySelector(".sLab").value, labOther: s.querySelector(".sLabOther").value,
           teacher: s.querySelector(".sTeacher").value, teacherOther: s.querySelector(".sTeacherOther").value
         })),
+        bench: [...document.querySelectorAll("#benchBody tr")].map(tr => ({ use: tr.querySelector(".benchUse").checked, conc: tr.querySelector(".benchConc").value })),
         chems: [...document.querySelectorAll("#chemList .chemItem")].map(c => ({
           name: c.querySelector(".cName").value, qty: c.querySelector(".cQty").value, notes: c.querySelector(".cNotes").value
         })),
@@ -1339,6 +1297,10 @@
       (d.sessions && d.sessions.length ? d.sessions : [{}]).forEach(ss => {
         addSession(); fillSession(document.querySelector("#sessions .session:last-child"), ss);
       });
+      if (d.bench) {
+        const rows = [...document.querySelectorAll("#benchBody tr")];
+        d.bench.forEach((b, i) => { if (rows[i]) { rows[i].querySelector(".benchUse").checked = b.use !== false; if (b.conc !== undefined) rows[i].querySelector(".benchConc").value = b.conc; } });
+      }
       document.getElementById("chemList").innerHTML = "";
       (d.chems || []).forEach(c => addChem(c));
       document.getElementById("apBody").innerHTML = "";
@@ -1384,7 +1346,7 @@
       const w = [];
       if (!d.sessions.length || !d.sessions.some(s => s.date)) w.push("• No session dates entered");
       if (!d.title) w.push("• Experiment title is empty");
-      if (!d.chems.length && !d.apparatus.length) w.push("• Both requisition lists are empty");
+      if (!d.chems.length && !d.apparatus.length && !(d.bench || []).some(b => b.use)) w.push("• The requisition lists are empty");
       if (d.safety.some(v => !v)) w.push("• Some safety consideration rows are untouched");
       if (d.precautions.some(v => !v)) w.push("• Some precaution rows are untouched");
       if (w.length) return confirm("Before generating, please note:\n\n" + w.join("\n") + "\n\nGenerate anyway?");
@@ -1419,8 +1381,12 @@
       const sess = d.sessions.filter(s => s.date || s.cls || s.lab || s.start);
       const sessCols = sess.length || 1;
       const sessRow = (label, fn) => `<tr><td class="lbl">${label}</td>${(sess.length ? sess : [{}]).map(s => `<td>${esc(fn(s))}</td>`).join("")}</tr>`;
+      const benchUsed = (d.bench || []).filter(b => b.use && (b.conc || b.name));
+      const benchRows = benchUsed.map((b, i) => `<tr><td style="width:30pt">${i + 1}.</td>
+    <td>${b.name} (${subFormula(b.formula)})</td>
+    <td style="width:150pt">${b.conc ? esc(b.conc) + (b.molar ? " mol/dm³" : "") : ""}</td></tr>`).join("");
       const chemRows = d.chems.map((c, i) => `<tr><td style="width:30pt">${i + 1}.</td>
-    <td>${esc(c.name)}${c.notes ? `<br><span class="small">${nl2br(c.notes)}</span>` : ""}</td>
+    <td>${subFormula(c.name)}${c.notes ? `<br><span class="small">${nl2br(c.notes)}</span>` : ""}</td>
     <td style="width:110pt">${esc(c.qty)}</td></tr>`).join("");
       const apRows = d.apparatus.map((a, i) => `<tr><td style="width:30pt">${i + 1}.</td>
     <td>${esc(a.name)}</td><td style="width:110pt">${esc(a.qty)}</td></tr>`).join("");
@@ -1449,6 +1415,8 @@ ${sessRow("Class", s => s.cls)}${sessRow("Lab", s => s.lab)}${sessRow("Teacher",
 <table><tr><td class="lbl">Experiment Title</td>
   <td>${esc(d.title)}<br><span class="small">(number of candidates: ${esc(d.candidates)} &nbsp;|&nbsp; number of sets per lab: ${esc(d.setsPerLab)})</span></td></tr></table>
 <p class="gap">&nbsp;</p>
+${benchRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Communal bench reagents</th><th style="width:150pt">Concentration</th></tr>${benchRows}</table>
+<p class="gap">&nbsp;</p>` : ""}
 ${chemRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Chemicals required</th><th style="width:110pt">Qty</th></tr>${chemRows}</table>
 <p class="gap">&nbsp;</p>` : ""}
 ${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</th><th style="width:110pt">Qty (per set)</th></tr>${apRows}</table>
@@ -1527,6 +1495,7 @@ ${apRows ? `<table><tr><th style="width:30pt">S/no.</th><th>Apparatus required</
     /* ---------- Init ---------- */
     document.getElementById("subDate").value = new Date().toISOString().slice(0, 10);
     document.getElementById("subDate").addEventListener("change", checkThreeDays);
+    buildBench();
     buildApparatusGrid();
     buildSafetyTables();
     addSession();
