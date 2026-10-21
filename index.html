@@ -536,8 +536,27 @@
         <div><label for="selYear">Year</label>
           <select id="selYear" onchange="cascade()">
             <option value="">— select —</option>
+            <option>1996</option>
+            <option>1997</option>
+            <option>1998</option>
+            <option>1999</option>
+            <option>2000</option>
+            <option>2001</option>
+            <option>2002</option>
+            <option>2003</option>
+            <option>2004</option>
+            <option>2005</option>
+            <option>2006</option>
+            <option>2007</option>
+            <option>2008</option>
+            <option>2009</option>
+            <option>2010</option>
+            <option>2011</option>
+            <option>2012</option>
+            <option>2013</option>
             <option>2014</option>
             <option>2015</option>
+            <option>2016</option>
             <option>2017</option>
             <option>2018</option>
             <option>2019</option>
@@ -673,15 +692,14 @@
     const LABS = ["Chem Lab 1", "Chem Lab 2"];
 
     const APPARATUS_MASTER = [
-      "Beaker (250 cm³)", "Boiling tube", "Bunsen burner",
-      "Burette + burette clamp and stand", "Conical flask (250 cm³)", "Crucible + lid",
-      "Delivery tube (boiling-tube)", "Delivery tube (test-tube)", "Dropper / teat pipette",
-      "Electronic balance", "Evaporating dish", "Filter funnel", "Filter papers", "Glass rod",
-      "Heatproof mat", "Lighter", "Marker pen", "Measuring cylinder",
-      "Pipette (25.0 cm³) + pipette filler", "Polystyrene cup", "Red and blue litmus paper",
-      "Rubber stopper", "Spatula", "Stopwatch", "Test tubes", "Test-tube holder", "Test-tube rack",
-      "Thermometer", "Tongs", "Tripod + wire gauze", "Wash bottle (distilled water)", "White tile",
-      "Wooden splints"
+      "Beaker (100 cm³)", "Beaker (250 cm³)", "Boiling tube", "Bunsen burner", "Burette + burette clamp and stand",
+      "Conical flask (250 cm³)", "Crucible + lid", "Delivery tube (boiling-tube)", "Delivery tube (test-tube)",
+      "Dropper / teat pipette", "Electronic balance", "Evaporating dish", "Filter funnel", "Filter paper strips",
+      "Filter papers", "Gas syringe", "Glass rod", "Heatproof mat", "Lighter", "Marker pen", "Measuring cylinder",
+      "Paper towels", "Pipette (25.0 cm³) + pipette filler", "Polystyrene cup", "Red and blue litmus paper",
+      "Retort stand + clamp", "Rubber stopper", "Safety goggles", "Spatula", "Stopwatch", "Test tubes",
+      "Test-tube brush", "Test-tube holder", "Test-tube rack", "Thermometer", "Tongs", "Tripod + wire gauze",
+      "Wash bottle (distilled water)", "Waste container (labelled 'waste')", "White tile", "Wooden splints"
     ];
 
     /* Communal bench reagents — name, chemical formula, default concentration, and whether it takes the mol/dm³ unit */
@@ -707,206 +725,1350 @@
         });
     }
 
-    /* Experiment library: key = syllabus|year. Each entry autofills the form. */
+    /* Experiment library: key = syllabus|year (several saved titles per key are allowed).
+       Each entry autofills the form:
+         bench      — optional; 10 concentrations in BENCH_REAGENTS order (null = not used). Omit to use the defaults.
+         chemicals  — { name, qty, notes }
+         apparatus  — [name, qty] or [name, qty, tick-box name] when the wording differs from APPARATUS_MASTER
+         safety / precautions — optional; true = Yes, false = Not applicable. Omit to leave them for the teacher. */
     const EXPERIMENT_LIBRARY = {
-      "5086|2014": [{
-        title: "2014 ‘O’ Level Science Practical",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "Standard reagents", qty: "", notes: "" },
-          { name: "Distilled water", qty: "", notes: "" },
-          { name: "Salt Q: Calcium Nitrate", qty: "1 vial/bench", notes: "" },
-          { name: "R: Calcium Hydroxide", qty: "1 btl/bench", notes: "Place 5 g into a 500 ml beaker and half fill the beaker with deionized water. Stir the suspension and pour into a 2.5L btl" },
-          { name: "Marble chips", qty: "10g/ student", notes: "" },
-          { name: "Aluminium foil (1 x 1cm)", qty: "1 vial/bench", notes: "" },
-          { name: "2cm clean magnesium ribbon", qty: "1 vial/bench", notes: "" },
-          { name: "Barium nitrate solution (0.1mol)", qty: "1 btl/bench", notes: "" },
-          { name: "Silver nitrate solution (0.05mol)", qty: "1 btl/bench", notes: "" },
-        ],
-        apparatus: [
-          ["Test tubes and a test tube rack", 1], ["Stopper for boiling-tube", 1], ["Droppers", 1], ["Spatula", 1], ["Delivery tube for boiling-tube", 1], ["Wooden splint", 1], ["Glass rod", 1], ["Red & blue litmus paper", 1], ["Bunsen burner & wire gauze", 1], ["Tripod stand", 1], ["Lighter", 1], ["Safety goggles", 1]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2015": [{
-        title: "2015 ‘O’ Level Science Practical",
-        candidates: 40, setsPerLab: 26,
-        chemicals: [
-          { name: "Bench reagents", qty: "", notes: "" },
-          { name: "Distilled water", qty: "", notes: "" },
-          { name: "solution X: 1 mol/dm3 Na2SO4", qty: "", notes: "" },
-          { name: "solution Y: 1 mol/dm3 Na2SO4 + 1 mol/dm3 Na2CO3", qty: "", notes: "" },
-          { name: "solution Z: 1 mol/dm3 Na2CO3", qty: "", notes: "" },
-          { name: "solution P: 0.5 mol/dm3 (NH4)2Fe(SO4)2", qty: "", notes: "" },
-          { name: "Barium nitrate solution (0.1mol)", qty: "", notes: "" },
-          { name: "Potassium managanate(VII)", qty: "", notes: "" },
-        ],
-        apparatus: [
-          ["Test tubes and a test tube rack", 1], ["10 ml measuring cylinder", 1], ["Droppers", 1], ["Wooden splint", 1], ["Glass rod", 1], ["Red & blue litmus paper", 1], ["Bunsen burner", 1], ["Lighter", 1], ["Safety goggles", 1]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2017": [{
-        title: "O level Sci(Chem) Paper 5 [2017]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "standard bench reagents", qty: "1 set", notes: "" },
-          { name: "Unknown X – aqueous sodium carbonate [0.5 mol/dm3]", qty: "", notes: "" },
-          { name: "Unknown Y – aqueous ammonium ferrous sulfate, (NH4)2Fe(SO4)2 [0.5 mol/dm3]", qty: "", notes: "" },
-        ],
-        apparatus: [
-          ["Test-tube racks", 1], ["Bunsen burner and lighter", 1], ["test-tube holder", 1], ["teat pipettes", 3], ["Boiling tubes", 2], ["test-tubes", 6], ["Red & blue litmus papers", 1], ["Wooden splint", 2], ["10 ml measuring cylinder", 1], ["100 ml beaker", 1], ["Filter Paper & Filter funnel", 1], ["Glass rod", 1], ["spatula", 1]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2018": [{
-        title: "O level Sci(Chem) Paper 5 [2018]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "Aqueous silver nitrate", qty: "", notes: "" },
-          { name: "standard bench reagents", qty: "1 set", notes: "" },
-          { name: "Solution Q – aqueous iron(III) nitrate", qty: "", notes: "" },
-          { name: "Solution R – aqueous sodium carbonate", qty: "", notes: "" },
-          { name: "Granulated zinc", qty: "3 pieces", notes: "" },
-          { name: "Aluminium foil", qty: "2 pieces", notes: "" },
-        ],
-        apparatus: [
-          ["Bunsen burner and lighter", 1], ["test-tube holder", 1], ["teat pipettes", 3], ["Boiling tubes", 2], ["test-tubes", 6], ["Red & blue litmus papers", 1], ["Wooden splint", 2], ["Test-tube racks", 2]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2019": [{
-        title: "O level Sci(Chem) Paper 5 [2019]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "standard bench reagents", qty: "", notes: "" },
-          { name: "Solution W – aqueous hydrogen peroxide", qty: "", notes: "" },
-          { name: "Solution X – aqueous potassium iodide", qty: "", notes: "" },
-          { name: "Solution Y – aqueous potassium manganate(VII)", qty: "", notes: "" },
-          { name: "Distilled water", qty: "", notes: "" },
-        ],
-        apparatus: [
-          ["Bunsen burner and lighter", 1], ["test-tube holder", 1], ["teat pipettes", 3], ["test-tubes", 6], ["Wooden splint", 2]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2020": [{
-        title: "O level Sci(Chem) Paper 5 [2020]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "standard bench reagents", qty: "", notes: "" },
-          { name: "Solution Q : cupric chloride – 85.2 g/L", qty: "", notes: "" },
-          { name: "Soution R1 – sodium bicarbonate : 16.8 g/L", qty: "", notes: "" },
-          { name: "Soution R2 – sodium bicarbonate : 8.4 g/L", qty: "", notes: "" },
-          { name: "Solution I – screened methyl orange : B121 Vial , 3ml student", qty: "", notes: "" },
-        ],
-        apparatus: [
-          ["Bunsen burner and lighter", 1], ["test tubes, one labelled as R1 and one labelled as R2", 7], ["teat pipettes", 6], ["Wooden splints", 1], ["Red and blue litmus papers", 1], ["10 ml measuring cylinders", 2], ["Glass rod", 1], ["Delivery tube (fitted for test-tube)", 1], ["Delivery tube (fitted for boiling tube)", 1], ["Boiling tube", 2], ["stopwatch", 1], ["Solid P : sodium hydrogen carbonate – blue spatula", 1]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2021": [{
-        title: "O level Sci(Chem) Paper 5 [2021]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "standard bench reagents", qty: "", notes: "" },
-          { name: "Solution S – Ammonium Iron(III) sulfate – 96.4g/l", qty: "30 ml", notes: "" },
-          { name: "Zinc powder", qty: "0.9g – 1.1g", notes: "" },
-        ],
-        apparatus: [
-          ["Bunsen burner and lighter", 1], ["test tubes", 6], ["teat pipettes", 6], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["10 ml measuring cylinders", 2], ["Glass rod", 1], ["Delivery tube (fitted for test-tube)", 1], ["Delivery tube (fitted for boiling tube)", 1], ["Boiling tube", 2], ["stopwatch", 1]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2022": [{
-        title: "O level Sci(Chem) Paper 5 [2022]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "Solution P (vial)", qty: "1", notes: "" },
-          { name: "Solution P (bottle)", qty: "1", notes: "" },
-          { name: "Solution Q (bottle)", qty: "1", notes: "" },
-        ],
-        apparatus: [
-          ["Bunsen burner and lighter", 1], ["test tubes", 6], ["teat pipettes", 6], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["25 ml measuring cylinders", 2], ["Glass rod", 1], ["Delivery tube (fitted for test-tube)", 1], ["Filter funnel", 1], ["burette", 1], ["pipette", 1], ["Conical flask", 2]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2023": [{
-        title: "O level Sci(Chem) Paper 5 [2023]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "B (vial)", qty: "1", notes: "" },
-          { name: "C (vial)", qty: "1", notes: "" },
-          { name: "HCl", qty: "1", notes: "" },
-        ],
-        apparatus: [
-          ["Bunsen burner and lighter", 1], ["test tubes", 6], ["teat pipettes", 6], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["Delivery tube (fitted for test-tube)", 1], ["Delivery tube (fitted for boiling tube)", 1], ["A – in two stoppered boiling tubes", 1]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "5086|2024": [{
-        title: "O level Sci(Chem) Paper 5 [2024]",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "W (mixture of 0.5mol /dm3 HCl and 0.5mol /dm3 HNO3)", qty: "1", notes: "" },
-          { name: "X (FeCl3)", qty: "1", notes: "" },
-          { name: "Y (KI)", qty: "1", notes: "" },
-          { name: "T (NaS2O3)", qty: "1", notes: "" },
-          { name: "S (starch solution)", qty: "1", notes: "" },
-        ],
-        apparatus: [
-          ["Bunsen burner and lighter", 1], ["test tubes", 3], ["boiling tube", 1], ["teat pipettes", 5], ["Wooden splints", 2], ["Red and blue litmus papers", 1], ["Glass rod", 1], ["Test-tube holder", 1], ["stopwatch", 1], ["Measuring cylinder (25 cm3)", 2]
-        ],
-        safety: [true, true, true, false, false, false],
-        precautions: [true, true, false, false]
-      }],
-      "6092|2020": [{
-        title: "2020 Pure Chemistry 'O' Level Science Practical",
-        candidates: 40, setsPerLab: 40,
-        chemicals: [
-          { name: "Dilute nitric acid (1 mol/dm³)", qty: "", notes: "" },
-          { name: "Dilute sodium hydroxide (1 mol/dm³)", qty: "", notes: "" },
-          { name: "Aqueous ammonia (1 mol/dm³)", qty: "", notes: "" },
-          { name: "Calcium hydroxide (limewater)", qty: "", notes: "" },
-          { name: "Aqueous barium nitrate (0.2 mol/dm³)", qty: "", notes: "" },
-          { name: "Aqueous silver nitrate (0.2 mol/dm³)", qty: "", notes: "" },
-          {
-            name: "P — 0.200 mol/dm³ sodium hydroxide", qty: "250 cm³ in 300 cm³ bottle per candidate",
-            notes: "NaOH: 8 g per 1 dm³ distilled water (240 g per 30 dm³)."
-          },
-          {
-            name: "Q — dilute hydrochloric acid", qty: "250 cm³ in 300 cm³ bottle per candidate",
-            notes: "Concentrated HCl stock: 12.4 cm³ per 1 dm³ distilled water (372 cm³ per 30 dm³)."
-          },
-          { name: "T — thymolphthalein indicator (B121 vial)", qty: "3 cm³ per vial", notes: "" },
-          {
-            name: "Unknown R (0.9 g to 1.1 g)", qty: "1 boiling tube per candidate",
-            notes: "R(a): 0.5 g CuSO₄. R(b): 0.5 g anhydrous Na₂CO₃. Mix R(a) and R(b) well. Stopper the boiling tube with a rubber stopper."
-          },
-          {
-            name: "Unknown S (2 g)", qty: "1 boiling tube per candidate",
-            notes: "S(a): 1 g NaCl. S(b): 1 g CuSO₄. Mix S(a) and S(b) well. Stopper the boiling tube with a rubber stopper."
-          }
-        ],
-        apparatus: [
-          ["Conical flask (250 cm³)", 2], ["Glass rod", 4], ["Filter funnel", 2],
-          ["Burette + burette clamp and stand", 1], ["Pipette (25.0 cm³) + pipette filler", 1], ["White tile", 1],
-          ["Boiling tube (containing and labelled R and S)", 2], ["Test tubes", 10], ["Test-tube rack", 1],
-          ["Dropper / teat pipette", 3], ["Test-tube holder", 1], ["Wooden splints", 2],
-          ["Red litmus paper", 1], ["Blue litmus paper", 1], ["Filter papers", 1], ["Lighter", 1], ["Marker pen", 1]
-        ],
-        safety: [true, true, true, false, false, false],  /* Yes = true, N.A. = false */
-        precautions: [true, true, false, false]
-      }]
+      "6092|2018": [
+        {
+          title: "2018 Pure Chemistry Prelim Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "1", "1", "saturated", "0.2", "0.05", "0.02", "1 cm × 1 cm"],
+          chemicals: [
+            { name: "Q1) T (Zinc Carbonate)", qty: "0.5 g", notes: "2 Flat scoop (Normal Spatula)" },
+            { name: "Q1) S (0.10 mol/dm³ of Hydrochloric Acid)", qty: "150 cm³ in 300 cm³ Bottle", notes: "For 5 dm³ of solutions - Dilute 207 cm³ of concentrated HCl with Deionised water and top up to 5 dm³" },
+            { name: "Q1) R (0.10 mol/dm³ of Sodium Hydroxide)", qty: "150 cm³ in 300 cm³ Bottle", notes: "4 g/dm³" },
+            { name: "Methyl Orange", qty: "", notes: "" },
+            { name: "Magnesium Ribbon", qty: "5 pieces of 4 cm", notes: "Vial B43" },
+            { name: "Q2) P (1.00 mol/dm³ of Sulfuric Acid)", qty: "150 cm³", notes: "" },
+          ],
+          apparatus: [
+            ["Test-tube rack", 1],
+            ["Boiling tube", 1],
+            ["Test tubes", 5],
+            ["Burette + burette clamp and stand", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Filter funnel", 1],
+            ["White tile", 1],
+            ["Conical flask (250 cm³)", 2],
+            ["Measuring cylinder (25 ml)", 1, "Measuring cylinder"],
+            ["Glass rod", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Dropper / teat pipette", 2],
+            ["Waste container (beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Paper towels", 1],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 1],
+            ["Aluminium foil", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2018 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Zinc Powder", qty: "2.5 g to 3.0 g in Total", notes: "Weigh between 0.5 g to 0.6 g of Zinc powder in each of the Five(5) B121 Vials" },
+            { name: "P (Copper(II) Sulfate)", qty: "35 cm³ in vial B155", notes: "Dissolve 124.8 g in deionised water and top up to 1 dm³ with deionised water\n*Corrosive, Aquatic Toxicity, Warning" },
+            { name: "Q (Potassium Manganate(VII))", qty: "300 cm³", notes: "Dissolve 3.16 g of Potassium Manganate(VII) in deionised water and top up to 1 dm³ with deionised water" },
+            { name: "R (Iron(II) Sulfate)", qty: "150 cm³", notes: "Dissolve 22.2 g of Iron(II) Sulfate in 1.0 mol/dm³ sulfuric acid and then top up to 1 dm³ with deionised water" },
+          ],
+          apparatus: [
+            ["Burette + burette clamp and stand", 1],
+            ["Filter funnel", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Boiling tube", 1],
+            ["Test-tube rack", 1],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette", 3],
+            ["Conical flask (250 cm³)", 2],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Thermometer", 1],
+            ["White tile", 1],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Heatproof mat (e.g. wire gauze)", 1, "Heatproof mat"],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Wooden splints", 3],
+            ["Red and blue litmus paper", 2],
+            ["Wash bottle (distilled water)", 1],
+            ["Waste container (250 cm³ beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Safety goggles", 1],
+            ["Test-tube brush", 1],
+            ["Marker pen", 1],
+            ["Paper towels", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "6092|2019": [
+        {
+          title: "2019 Pure Chemistry Prelim Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "1", "1", "saturated", "0.2", "0.05", "0.02", "1 cm × 1 cm"],
+          chemicals: [
+            { name: "Q1) P (0.05 mol/dm³ Sodium Carbonate)", qty: "150 cm³", notes: "Dissolve 5.3 g anhydrous Sodium Carbonate in deionised water and top up to 1 dm³ with deionised water" },
+            { name: "Q1) Q (0.10 mol/dm³ Hydrochloric Acid)", qty: "150 cm³", notes: "" },
+            { name: "Q1) Methyl Orange", qty: "", notes: "" },
+            { name: "Q2) L (Potassium Iodide)", qty: "200 cm³", notes: "Dissolve 1 g of starch, follow by 1 g of potassium iodide in 1 dm³ of deionised water\n*Bring it to BOIL" },
+            { name: "Q2) M (Hydrogen Peroxide)", qty: "300 cm³", notes: "Add 10 cm³ of '20 volume of H2O2' to 990 cm³ distilled water. Add 2 cm³ of concentrated sulfuric acid" },
+          ],
+          apparatus: [
+            ["Burette + burette clamp and stand", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Filter funnel", 1],
+            ["White tile", 1],
+            ["Conical flask (250 cm³)", 2],
+            ["Measuring cylinder (50 ml) labelled L/M", 1, "Measuring cylinder"],
+            ["Measuring cylinder (100 ml) labelled M/L", 1, "Measuring cylinder"],
+            ["Stopwatch", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Beaker (250 cm³)", 2],
+            ["Dropper / teat pipette", 2],
+            ["Waste container (beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Glass rod", 1],
+            ["Paper towels", 1],
+            ["Red and blue litmus paper", 1],
+            ["Aluminium foil", 1],
+            ["Wooden splints", 1],
+            ["Delivery tube (test-tube)", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2019 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "1", "1", "saturated", "0.2", "0.05", "0.02", "1 cm × 1 cm"],
+          chemicals: [
+            { name: "Q1) P (Sulfuric Acid)", qty: "250 cm³", notes: "*Highly Corrosive - Cautiously pour 42 cm³ of Sulfuric Acid into 500 cm³ of deionised water and top up to 1 dm³ with deionised water" },
+            { name: "Q1) Q (Sodium Hydroxide)", qty: "250 cm³", notes: "Dissolve 50.0 g of Sodium Hydroxide in deionised water with continuous stirring and then top up to 1 dm³ with deionised water" },
+            { name: "Q2) R (Sodium Hydrogen Carbonate + Sodium Chloride)", qty: "1.90 g to 2.10 g in vial B121", notes: "Mix 80%(1.6 g) by mass of *R(a) and 20%(0.4 g) by mass of *R(b) thoroughly to form a homogenous mixture, R.\n\n*R(a) - Sodium Hydrogen Carbonate\n*R(b) - Sodium Chloride" },
+            { name: "Q2) S (Sodium Carbonate + Sodium Chloride)", qty: "0.10 g to 0.15 g in stoppered test-tube", notes: "Mix 80%(0.08 g) of *S(a) and 20%(0.02 g) of *S(b) thoroughly to form a homogenous mixture, S.\n\n*S(a) - Sodium Carbonate\n*S(b) - Sodium Chloride" },
+          ],
+          apparatus: [
+            ["Burette + burette clamp and stand", 1],
+            ["Filter funnel", 1],
+            ["Beaker (250 cm³)", 1],
+            ["Test tubes", 5],
+            ["Test-tube rack", 1],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette", 2],
+            ["Thermometer", 1],
+            ["Measuring cylinder (50 ml)", 1, "Measuring cylinder"],
+            ["Stopwatch", 1],
+            ["Glass rod", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Heatproof mat", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 2],
+            ["Wash bottle (distilled water)", 1],
+            ["Waste container (250 cm³, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Spatula", 1],
+            ["Safety goggles", 1],
+            ["Test-tube brush", 1],
+            ["Marker pen", 1],
+            ["Paper towels", 1],
+            ["Electronic balance", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "6092|2020": [
+        {
+          title: "2020 Pure Chemistry Prelim Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Q1) P (0.05 mol/dm³ iodine in 0.15 mol/dm³ potassium iodide)", qty: "150 cm³", notes: "Dissolve 12.7 g of iodine and 25 g of potassium iodide in warm distilled water and dilute to 1 dm³." },
+            { name: "Q1) Q (0.10 mol/dm³ sodium thiosulfate)", qty: "150 cm³", notes: "24.8 g of Hydrated Sodium Thiosulfate, dissolved in 1 dm³ of deionised water." },
+            { name: "Q1) Aqueous Starch (2% aqueous starch)", qty: "10 cm³", notes: "Mix 2 g of soluble starch with a little cold water until a firm paste is obtained. Add 100 cm³ of boiling water and stir. Boil until a clear solution is obtained (about 5min). *This solution should be freshly prepared." },
+            { name: "Q2) Calcium Carbonate Powder", qty: "1.5 g in Stoppered tube labelled 'Solid D'", notes: "" },
+            { name: "Q2) Calcium Oxide Powder", qty: "1.5 g in Stoppered tube labelled 'Solid E'", notes: "" },
+            { name: "Q2) Hydrated Potassium Chloride", qty: "1.5 g in Stoppered tube labelled 'Solid F'", notes: "" },
+            { name: "Q2) Calcium Hydroxide Powder", qty: "1.5 g in Stoppered tube labelled 'Solid G'", notes: "" },
+            { name: "Q2) Calcium Hydroxide and Water", qty: "Stoppered Bottle labelled 'calcium hydroxide and water'", notes: "2 g of powdered calcium hydroxide and about 100 cm³ of deionised water. Shake well for about a minute and set aside for a day or more." },
+            { name: "Q2) Methyl Orange Indicator", qty: "", notes: "" },
+            { name: "Q2) Marble Chips", qty: "10 g of Marble Chips", notes: "10 g of Marble chips labelled 'marble chips'" },
+          ],
+          apparatus: [
+            ["Test-tube rack", 1],
+            ["Boiling tube", 1],
+            ["Test tubes", 5],
+            ["Burette + burette clamp and stand", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Filter funnel", 1],
+            ["White tile", 1],
+            ["Conical flask (250 cm³)", 3],
+            ["Stopwatch", 1],
+            ["Glass rod", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Waste container (beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Dropper / teat pipette", 4],
+            ["Paper towels", 1],
+            ["Lighter", 1],
+            ["Test-tube holder", 1],
+            ["Polystyrene cup", 1],
+            ["Beaker (250 cm³) to hold the polystyrene cup", 1, "Beaker (250 cm³)"],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Measuring cylinder (50 ml)", 1, "Measuring cylinder"],
+            ["Thermometer (1 °C intervals)", 1, "Thermometer"],
+            ["Beaker (100 cm³)", 2],
+            ["Filter papers", 1],
+            ["Wooden splints", 2],
+            ["Safety goggles", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2020 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: [null, "1", null, "1", "1", "saturated", "0.2", "0.2", null, null],
+          chemicals: [
+            { name: "P — 0.200 mol/dm³ sodium hydroxide", qty: "250 cm³ in 300 cm³ bottle per candidate", notes: "NaOH: 8 g per 1 dm³ distilled water (240 g per 30 dm³)." },
+            { name: "Q — dilute hydrochloric acid", qty: "250 cm³ in 300 cm³ bottle per candidate", notes: "Concentrated HCl stock: 12.4 cm³ per 1 dm³ distilled water (372 cm³ per 30 dm³)." },
+            { name: "T — thymolphthalein indicator (B121 vial)", qty: "3 cm³ per vial", notes: "" },
+            { name: "Unknown R (0.9 g to 1.1 g)", qty: "1 boiling tube per candidate", notes: "R(a): 0.5 g CuSO₄. R(b): 0.5 g anhydrous Na₂CO₃. Mix R(a) and R(b) well. Stopper the boiling tube with a rubber stopper." },
+            { name: "Unknown S (2 g)", qty: "1 boiling tube per candidate", notes: "S(a): 1 g NaCl. S(b): 1 g CuSO₄. Mix S(a) and S(b) well. Stopper the boiling tube with a rubber stopper." },
+          ],
+          apparatus: [
+            ["Conical flask (250 cm³)", 2],
+            ["Glass rod", 4],
+            ["Filter funnel", 2],
+            ["Burette + burette clamp and stand", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["White tile", 1],
+            ["Boiling tube (containing and labelled R and S)", 2, "Boiling tube"],
+            ["Test tubes", 10],
+            ["Test-tube rack", 1],
+            ["Dropper / teat pipette", 3],
+            ["Test-tube holder", 1],
+            ["Wooden splints", 2],
+            ["Red litmus paper", 1],
+            ["Blue litmus paper", 1],
+            ["Filter papers", 1],
+            ["Lighter", 1],
+            ["Marker pen", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "6092|2021": [
+        {
+          title: "2021 Pure Chemistry Prelim Practical", candidates: 40, setsPerLab: 40,
+          bench: ["1", "1", "1", "1", "1", "saturated", "0.1", "0.05", "0.02", "2 cm × 2 cm (2 pieces)"],
+          chemicals: [
+            { name: "Q1) P (0.25 mol/dm³ Aqueous Sodium Hydroxide)", qty: "150 cm³", notes: "10 g of Sodium Hydroxide, NaOH, dissolved in 1 dm³ of Deionised Water" },
+            { name: "Q1) Q (0.625 mol/dm³ Dilute Hydrochloric Acid)", qty: "150 cm³", notes: "75 g of Hydrochloric Acid, HCl, dissolved in 1.710 dm³ of Deionised Water" },
+            { name: "Q1) M (Screened Methyl Orange)", qty: "10 cm³", notes: "B121" },
+            { name: "Q2) W (Aqueous Hydrogen Peroxide)", qty: "40 cm³", notes: "B155" },
+            { name: "Q2) X (Aqueous Potassium Iodide)", qty: "20 cm³", notes: "B43" },
+            { name: "Q2) Y (Aqueous Potassium Manganate(VII))", qty: "20 cm³", notes: "B43" },
+          ],
+          apparatus: [
+            ["Conical flask (250 cm³)", 1],
+            ["Burette + burette clamp and stand", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["White tile", 1],
+            ["Filter funnel", 1],
+            ["Waste container (labelled 'waste')", 1],
+            ["Test tubes", 5],
+            ["Test-tube rack", 1],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette", 4],
+            ["Rubber stopper", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Stopwatch", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 2],
+            ["Wash bottle (distilled water)", 1],
+            ["Safety goggles", 1],
+            ["Test-tube brush", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2021 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "1", "1", "saturated", "0.1", "0.05", "0.02", "2 cm × 2 cm (2 pieces)"],
+          chemicals: [
+            { name: "Q2) P (Sodium Thiosulfate)", qty: "120 cm³", notes: "Dissolve 29.8 g of Sodium Thiosulfate in Deionised Water with continuous stirring and then make up to 1 dm³ with Deionised water" },
+            { name: "Q2) Q (Copper(II) Sulfate)", qty: "120 cm³", notes: "Dissolve 27 g of (Copper(II) Sulfate) in deionised water with continuous stirring and then make up to 1 dm³ with Deionised water" },
+            { name: "Q2) R (Potassium Iodide)", qty: "100 cm³", notes: "Dissolve 66.4 g of Potassium Iodide in deionised water with continuous stirring and then make up to 1 dm³ with deionised water" },
+            { name: "Q2) S (Starch)", qty: "10 cm³ in Vial B43", notes: "Add 20 g of Starch slowly to 500 cm³ of boiling deionised water with stirring. Stir until a clear solution is obtained and make up to 1 dm³ using HOT deionised water. Allow the temperature to cool down to room temperature before dispensing this solution into a Vial. Vial B43" },
+            { name: "Q1) X (Ammonium Iron(II) Sulfate)", qty: "0.7 g to 0.9 g In Stoppered Tube", notes: "Weigh 0.7 g to 0.9 g of Ammonium Iron(II) Sulfate into a dry stoppered tube labelled 'X'" },
+            { name: "Q1) X (Ammonium Iron(II) Sulfate)", qty: "1.7 g to 1.9 g in Vial B121", notes: "Weigh 1.7 g to 1.9 g of Ammonium Iron(II) Sulfate into Vial B121 labelled as 'X'" },
+            { name: "Q1) Y (Hydrogen Peroxide)", qty: "5 cm³ in Vial B121", notes: "Add 500 cm³ of H2O2 into a jar and top up to 1 dm³." },
+          ],
+          apparatus: [
+            ["Test tubes", 4],
+            ["Boiling tube", 1],
+            ["Dropper / teat pipette", 3],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 2],
+            ["Paper towels", 2],
+            ["Glass rod", 1],
+            ["Conical flask (250 cm³)", 2],
+            ["Burette + burette clamp and stand", 1],
+            ["Filter funnel", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Waste container (250 cm³ beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Beaker (100 cm³, glass)", 1, "Beaker (100 cm³)"],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Measuring cylinder (50 ml)", 1, "Measuring cylinder"],
+            ["Filter papers", 2],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Test-tube rack", 1],
+            ["Lighter", 1],
+            ["White tile", 1],
+            ["Test-tube brush", 1],
+            ["Heatproof mat", 1],
+            ["Marker pen", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Stopwatch", 1],
+            ["Bunsen burner", 1],
+            ["Safety goggles", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "6092|2022": [
+        {
+          title: "2022 Pure Chemistry Prelim Practical", candidates: 40, setsPerLab: 40,
+          bench: ["1", "1", "0.5", "1", "1", "saturated", "0.1", "0.05", "0.02", "1 cm × 1 cm"],
+          chemicals: [
+            { name: "Q1) P (1.00 mol/dm³ of Sodium Hydroxide)", qty: "150 cm³", notes: "" },
+            { name: "Q1) Q (1.00 mol/dm³ of Dilute Nitric Acid)", qty: "150 cm³", notes: "" },
+            { name: "Q1) Methyl Orange", qty: "10 cm³", notes: "" },
+            { name: "Q2) '1' Anhydrous Calcium Chloride", qty: "1 g in Test-tube", notes: "A test-tube containing of 1 g of Anhydrous Calcium Chloride" },
+            { name: "Q2) '2' Anhydrous Calcium Chloride", qty: "1.5 g in Test-tube", notes: "A test-tube containing of 1.5 g of Anhydrous Calcium Chloride" },
+            { name: "Q2) '3' Anhydrous Calcium Chloride", qty: "2 g in Test-tube", notes: "A test-tube containing of 2 g of Anhydrous Calcium Chloride" },
+            { name: "Q2) '4' Anhydrous Calcium Chloride", qty: "2.5 g in Test-tube", notes: "A test-tube containing of 2.5 g of Anhydrous Calcium Chloride" },
+            { name: "Q2) '5' Anhydrous Calcium Chloride", qty: "3 g in Test-tube", notes: "A test-tube containing of 3 g of Anhydrous Calcium Chloride" },
+            { name: "Q2) '6' Anhydrous Calcium Chloride", qty: "4 g in Test-tube", notes: "A test-tube containing of 4 g of Anhydrous Calcium Chloride" },
+            { name: "Q3) C (Solid Citric Acid Monohydrate)", qty: "2 g", notes: "Solid Citric Acid Monohydrate in a Vial" },
+            { name: "Q3) Sodium Hydrogencarbonate", qty: "1 g", notes: "Sodium Hydrogencarbonate in a Vial" },
+          ],
+          apparatus: [
+            ["Beaker (100 cm³, glass)", 1, "Beaker (100 cm³)"],
+            ["Rubber stopper", 1],
+            ["Test-tube rack", 1],
+            ["Test-tube holder", 1],
+            ["Boiling tube", 3],
+            ["Test tubes", 4],
+            ["Burette + burette clamp and stand", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Filter funnel", 1],
+            ["White tile", 1],
+            ["Conical flask (250 cm³)", 3],
+            ["Stopwatch", 1],
+            ["Measuring cylinder (50 ml)", 1, "Measuring cylinder"],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Thermometer", 1],
+            ["Glass rod", 1],
+            ["Spatula", 1],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Waste container (beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Dropper / teat pipette", 4],
+            ["Lighter", 1],
+            ["Bunsen burner", 1],
+            ["Heatproof mat", 1],
+            ["Red and blue litmus paper", 1],
+            ["Wooden splints", 1],
+            ["Paper towels", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2022 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "1", "1", "saturated", "0.2", "0.05", "0.02", "2 cm × 2 cm"],
+          chemicals: [
+            { name: "Q1) A (Copper(II) Sulfate (5-hydrate))", qty: "2.2 g to 2.4 g in Vial B121", notes: "Weigh between 2.2 g to 2.4 g of Copper(II) Sulfate (5-hydrate) into Vial B121 and label 'A'" },
+            { name: "Q1) B (Anhydrous Copper(II) Sulfate)", qty: "1.2 g to 1.4 g in Vial B121", notes: "Weigh between 1.2 g to 1.4 g of Anhydrous Copper(II) Sulfate into Vial B121 and label 'B'" },
+            { name: "Q2) C (Potassium Manganate(VII))", qty: "20 cm³ in Vial B43", notes: "Dissolve 3.16 g of Potassium Manganate(VII) in Deionised water with continuous stirring and then top up to 1 dm³. Dispense into Vial B43 and label as 'C'" },
+            { name: "Q2) D (Manganese(IV) Oxide)", qty: "0.9 g to 1.1 g in Vial B121", notes: "Weigh between 0.9 g to 1.1 g of Manganese(IV) Oxide into Vial B121 and label 'D'" },
+            { name: "Q2) E (Manganese(II) Chloride)", qty: "20 cm³ in B43", notes: "Dissolve 19.8 g of E in deionised water with continuous stirring and then top up to 1 dm³ with Deionised water. Dispense this solution into Vial B43" },
+            { name: "Q2) Hydrogen Peroxide", qty: "20 cm³ in B43", notes: "*Highly Corrosive - Cautiously pour 250 cm³ of Hydrogen Peroxide into 250 cm³ of Deionised water and top up to 1 dm³ using Deionised water. Dispense this solution into a Vial labelled 'Hydrogen Peroxide'" },
+          ],
+          apparatus: [
+            ["Test tubes", 9],
+            ["Boiling tube", 1],
+            ["Polystyrene cup", 1],
+            ["Spatula", 1],
+            ["Dropper / teat pipette", 4],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 2],
+            ["Paper towels", 2],
+            ["Filter papers", 2],
+            ["Filter funnel", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Waste container (250 cm³, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Beaker (250 cm³)", 1],
+            ["Measuring cylinder (25 ml)", 1, "Measuring cylinder"],
+            ["Glass rod", 1],
+            ["Thermometer", 1],
+            ["Test-tube rack", 1],
+            ["Test-tube holder", 1],
+            ["Test-tube brush", 1],
+            ["Lighter", 1],
+            ["Heatproof mat", 1],
+            ["Marker pen", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Stopwatch", 1],
+            ["Bunsen burner", 1],
+            ["Safety goggles", 1],
+            ["Electronic balance (communal, in front)", 1, "Electronic balance"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "6092|2023": [
+        {
+          title: "2023 Pure Chemistry Prelim Practical", candidates: 40, setsPerLab: 40,
+          bench: ["1", "1", "1", "2", "2", "saturated", "0.2", "0.05", "0.02", "1 cm × 1 cm"],
+          chemicals: [
+            { name: "Q1) P (0.04 mol/dm³ Aqueous Sulfuric Acid)", qty: "150 cm³", notes: "*Highly Corrosive - Cautiously pour 2.2 cm³ of Concentrated Sulfuric Acid into 500 cm³ of Deionised water with continuous stirring. Top up to 1 dm³ with deionised water.\n(Container - 300 cm³ Bottle)" },
+            { name: "Q1) Q (0.1 mol/dm³ Sodium Hydroxide)", qty: "150 cm³", notes: "(Container - 300 cm³ Bottle)" },
+            { name: "Q1) T (Thymolphthalein Indicator)", qty: "5 cm³ in B121", notes: "0.2% in Ethanol\nVial B121" },
+            { name: "Q2) X (0.5 mol/dm³ Anhydrous Aqueous Sodium Carbonate)", qty: "40 cm³ in B155", notes: "53 g/dm³" },
+            { name: "Q2) Y (0.5 mol/dm³ Aqueous Ammonium Iron(II) Sulfate)", qty: "40 cm³ in B155", notes: "196 g/dm³" },
+          ],
+          apparatus: [
+            ["Conical flask (250 cm³)", 2],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Burette + burette clamp and stand", 1],
+            ["White tile", 1],
+            ["Filter funnel", 1],
+            ["Waste container (labelled 'waste')", 1],
+            ["Test tubes", 7],
+            ["Boiling tube", 1],
+            ["Test-tube holder", 1],
+            ["Test-tube rack", 1],
+            ["Dropper / teat pipette", 6],
+            ["Delivery tube (test-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Stopwatch", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 2],
+            ["Wash bottle (distilled water)", 1],
+            ["Safety goggles", 1],
+            ["Test-tube brush", 1],
+            ["Spatula", 1],
+            ["Beaker (100 cm³, glass)", 1, "Beaker (100 cm³)"],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Glass rod", 1],
+            ["Tripod + 2 wire gauzes", 1, "Tripod + wire gauze"],
+            ["Filter paper strips", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2023 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "1", "1", "saturated", "0.1", "0.05", "0.02", "2 cm × 2 cm (2 pieces)"],
+          chemicals: [
+            { name: "Q2) C (Copper(II) Carbonate)", qty: "0.4 g to 0.6 g in Vial B121", notes: "Mix 75% by mass of Copper(II) Carbonate and 25% of Copper(II) Chloride and stir well to form a mixture. Ensure that C is well mixed before weighing.\n\nWeigh between 0.2 g to 0.3 g of this mixture, C into a test-tube labelled 'C'. Stopper the test-tube using a wooden or rubber stopper immediately. \n\nWeigh between 0.2 g to 0.3 g of this mixture C into a B121 Vial labelled 'C'" },
+            { name: "Q2) C (Copper(II) Chloride)", qty: "0.4 g to 0.6 g in Vial B121", notes: "Mix 75% by mass of Copper(II) Carbonate and 25% of Copper(II) Chloride and stir well to form a mixture. Ensure that C is well mixed before weighing.\n\nWeigh between 0.2 g to 0.3 g of this mixture, C into a test-tube labelled 'C'. Stopper the test-tube using a wooden or rubber stopper immediately. \n\nWeigh between 0.2 g to 0.3 g of this mixture C into a B121 Vial labelled 'C'" },
+            { name: "Q2) D (Copper(II) Carbonate)", qty: "0.65 g to 0.75 g in Vial B121", notes: "Weigh 0.65 g to 0.75 g of Copper(II) Carbonate into a Vial labelled 'D'" },
+            { name: "Q1/2) A (1 mol/dm³ Hydrochloric Acid)", qty: "100 cm³", notes: "Highly Corrosive - Cautiously pour 83 cm³ of Hydrochloric Acid into 500 cm³ of deionised water with continuous stirring and top up to 1 dm³ with deionised water. Ensure that the solution is cooled to room temperature before dispensing into the container" },
+            { name: "Q1) B (0.1 mol/dm³ Sodium Thiosulfate)", qty: "50 cm³", notes: "Dissolve 24.8 g of Sodium Thiosulfate into 500 cm³ of deionised water with continuous stirring and make up to 1 dm³ with deionised water" },
+            { name: "Q1) 0.5 mol/dm³ Sodium Carbonate Solution", qty: "80 cm³", notes: "Dissolve 53 g of Anhydrous Sodium Carbonate in deionised water with continuous stirring and then top up to 1 dm³ with deionised water. Dispense about 80 cm³ of this sodium carbonate solution into the container labelled 'Waste'" },
+          ],
+          apparatus: [
+            ["Test tubes", 9],
+            ["Measuring cylinder (10 ml)", 2, "Measuring cylinder"],
+            ["Retort stand + clamp", 1],
+            ["Boiling tube", 1],
+            ["Conical flask (250 cm³)", 1],
+            ["Spatula", 1],
+            ["Dropper / teat pipette", 3],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 1],
+            ["Paper towels", 1],
+            ["Filter funnel", 1],
+            ["Stopwatch", 1],
+            ["Test-tube rack", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Test-tube holder", 1],
+            ["Test-tube brush", 1],
+            ["Measuring cylinder (50 ml)", 1, "Measuring cylinder"],
+            ["White tile", 1],
+            ["Heatproof mat", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Marker pen", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Plastic ruler (15 cm or 30 cm) with mm scale", 1],
+            ["Safety goggles", 1],
+            ["Electronic balance (communal)", 1, "Electronic balance"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "6092|2024": [
+        {
+          title: "2024 Pure Chemistry Prelim Practical", candidates: 40, setsPerLab: 40,
+          bench: ["1", "1", "1.5", "1", "1", "saturated", "0.2", "0.05", "0.02", "2 cm × 2 cm (2 pieces)"],
+          chemicals: [
+            { name: "Q1) P (0.2 mol/dm³ Dilute Hydrochloric Acid)", qty: "150 cm³", notes: "0.73 g of Hydrochloric acid, HCl, dissolved in 1 dm³ of deionised water." },
+            { name: "Q1) Q (0.4 mol/dm³ Dilute Hydrochloric Acid)", qty: "150 cm³", notes: "1.46 g of hydrochloric acid, HCl, dissolved in 1 dm³ of deionised water." },
+            { name: "Q1) S (0.2 mol/dm³ Aqueous Sodium Hydroxide)", qty: "250 cm³", notes: "Add 1.6 g of Sodium Hydroxide to 500 cm³ deionised water. Dissolve the solid and then make the volume up to 1 dm³ with deionised water." },
+            { name: "Methyl Orange (Indicator)", qty: "5 cm³", notes: "" },
+            { name: "Q2) X (Aqueous Iron(III) Nitrate)", qty: "20 cm³", notes: "202 g/dm³" },
+            { name: "Q2) Y (Aqueous Sodium Carbonate)", qty: "20 cm³", notes: "106 g/dm³" },
+            { name: "Q2) Sulfuric Acid (1.5 mol/dm³ Dilute Sulfuric Acid)", qty: "10 cm³", notes: "Prepare 2 dm³" },
+            { name: "Q2) Granulated Zinc", qty: "6 Pieces", notes: "Zinc" },
+          ],
+          apparatus: [
+            ["Conical flask (250 cm³)", 2],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Burette + burette clamp and stand", 1],
+            ["White tile", 1],
+            ["Filter funnel", 1],
+            ["Waste container (labelled 'waste')", 1],
+            ["Dropper / teat pipette", 1],
+            ["Test tubes", 5],
+            ["Boiling tube", 2],
+            ["Test-tube rack", 1],
+            ["Test-tube holder", 5],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Stopwatch", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 2],
+            ["Wash bottle (distilled water)", 1],
+            ["Test-tube brush", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2024 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "2", "1", "saturated", "0.05", "0.05", "0.02", "2 cm × 2 cm (2 pieces)"],
+          chemicals: [
+            { name: "Q1) A (Hydrochloric Acid)", qty: "150 cm³", notes: "*Highly Corrosive - Cautiously pour 12 cm³ into 500 cm³ of deionised water with continuous stirring and top up to 1 dm³ with deionised water" },
+            { name: "Q1) B (Sodium Hydroxide)", qty: "150 cm³", notes: "*Highly Corrosive - Cautiously pour 6 cm³ into 500 cm³ of deionised water with continuous stirring and top up to 1 dm³ with deionised water" },
+            { name: "Q1) C (Thymolphthalein)", qty: "5 cm³ in Vial B121", notes: "B121" },
+            { name: "Q2) D (Hydrochloric Acid)", qty: "25 cm³", notes: "*Highly Corrosive - Cautiously pour 170 cm³ into 500 cm³ of deionised water with continuous stirring and top up to 1 dm³ with deionised water. Ensure that this solution is cooled down to room temperature before dispensing it into the vial labelled 'D'" },
+            { name: "Q2) E (Magnesium Ribbon)", qty: "1 strip of 3 cm", notes: "" },
+            { name: "Q2) F (Nitric Acid)", qty: "", notes: "*Highly Corrosive - Cautiously pour 250 cm³ into 750 cm³ of deionised water with continuous stirring and top up to 1 dm³ with deionised water." },
+          ],
+          apparatus: [
+            ["Test tubes", 4],
+            ["Boiling tube", 3],
+            ["Dropper / teat pipette", 3],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 1],
+            ["Paper towels", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Filter funnel", 1],
+            ["Measuring cylinder (100 ml)", 1, "Measuring cylinder"],
+            ["Burette + burette clamp and stand", 1],
+            ["Measuring cylinder (25 ml)", 1, "Measuring cylinder"],
+            ["Beaker (100 cm³)", 1],
+            ["Waste container (250 cm³ beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Conical flask (250 cm³)", 2],
+            ["Glass rod", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Test-tube holder", 1],
+            ["Test-tube rack", 1],
+            ["Test-tube brush", 1],
+            ["White tile", 1],
+            ["Heatproof mat", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Marker pen", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Container half-filled with tap water", 1],
+            ["Rubber bung fitted with rubber delivery tube (do NOT remove the bung from the tube)", 1],
+            ["Safety goggles", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2024 Pure Chemistry 'O' Level Practical — Question 2 only", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "D: dilute hydrochloric acid (2.0 mol/dm³)", qty: "1", notes: "" },
+            { name: "E: magnesium", qty: "1", notes: "" },
+            { name: "F: dilute nitric acid (0.5 mol/dm³)", qty: "1", notes: "" },
+          ],
+          apparatus: [
+            ["Boiling tube", 3],
+            ["Test tubes", 3],
+            ["Gas syringe", 1],
+            ["Measuring cylinder (25 ml)", 2, "Measuring cylinder"],
+            ["Measuring cylinder (100 ml)", 1, "Measuring cylinder"],
+            ["Paper towels", 1],
+            ["Bung", 1, "Rubber stopper"],
+            ["Dropper / teat pipette", 1],
+          ],
+          safety: [true, true, true, true, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "6092|2025": [
+        {
+          title: "2025 Pure Chemistry 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "2", "1", "saturated", "0.1", "0.05", "0.02", "2 cm × 2 cm (2 pieces)"],
+          chemicals: [
+            { name: "A (Sulfuric Acid)", qty: "280 cm³", notes: "*Highly Corrosive - Cautiously pour 42 cm³ of stock chemical for Sulfuric Acid into 500 cm³ of deionised water with continuous stirring and make up to 1 dm³ with deionised water. Ensure that the solution is cooled to room temperature" },
+            { name: "B (Sodium Hydroxide)", qty: "280 cm³", notes: "*Highly Corrosive - Dissolve 52 g of Sodium Hydroxide carefully in 1 dm³ of Deionised water. Ensure that this solution is cooled to room temperature before dispensing it into the container labelled 'B'" },
+            { name: "C (Zinc Carbonate)", qty: "1.4 g to 1.6 g in Vial B121", notes: "Weigh between 1.4 g to 1.6 g of Zinc Carbonate into a B121 vial labelled 'C'" },
+            { name: "C (Zinc Carbonate)", qty: "0.155 g to 0.175 g in test-tube", notes: "Weigh between 0.155 g and 0.175 g of Zinc Carbonate into a test-tube labelled 'C'" },
+            { name: "D (Hydrochloric Acid)", qty: "10 cm³", notes: "*Highly Corrosive - Cautiously pour 500 cm³ of stock chemical for Hydrochloric acid into 500 cm³ of deionised water with continuous stirring and make up to 1 dm³ with deionised water." },
+          ],
+          apparatus: [
+            ["Test tubes", 5],
+            ["Dropper / teat pipette", 4],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 2],
+            ["Paper towels (8 pieces)", 1, "Paper towels"],
+            ["Polystyrene cup", 1],
+            ["Beaker (250 cm³)", 1],
+            ["Measuring cylinder (50 ml)", 1, "Measuring cylinder"],
+            ["Burette + burette clamp and stand", 1],
+            ["Filter funnel", 1],
+            ["Thermometer", 1],
+            ["Glass rod", 1],
+            ["Spatula", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Rubber stopper", 1],
+            ["Test-tube holder", 1],
+            ["Test-tube rack", 1],
+            ["Test-tube brush", 1],
+            ["Heatproof mat", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Stopwatch", 1],
+            ["Waste container (250 cm³ beaker, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+            ["Marker pen", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Safety goggles", 1],
+            ["Crucible + lid", 1],
+            ["Tripod + wire gauze", 1],
+            ["Tongs", 1],
+            ["Electronic balance (communal)", 1, "Electronic balance"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2025 Pure Chemistry 'O' Level Practical — Question 1 only", candidates: 40, setsPerLab: 40,
+          chemicals: [
+          ],
+          apparatus: [
+            ["Dropper / teat pipette", 2],
+            ["Polystyrene cup", 1],
+            ["Beaker (250 cm³)", 1],
+            ["Measuring cylinder (50 ml)", 1, "Measuring cylinder"],
+            ["Burette + burette clamp and stand", 1],
+            ["Filter funnel", 1],
+            ["Thermometer", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|1996": [
+        {
+          title: "1996 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "X: potassium iodide", qty: "0.5 g", notes: "" },
+            { name: "Y: starch", qty: "0.5 g", notes: "" },
+            { name: "Z: aqueous sodium sulfite (0.5 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|1997": [
+        {
+          title: "1997 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "X: potassium iodate", qty: "1 g", notes: "" },
+            { name: "Y: aqueous potassium peroxodisulfate (0.05 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|1998": [
+        {
+          title: "1998 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "P: copper(II) carbonate", qty: "0.5 g to 0.6 g", notes: "" },
+            { name: "Q: glucose", qty: "0.5 g", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|1999": [
+        {
+          title: "1999 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "P: aqueous potassium manganate(VII) (0.02 mol/dm³)", qty: "", notes: "" },
+            { name: "Q: aqueous potassium manganate(VII) (0.01 mol/dm³)", qty: "", notes: "" },
+            { name: "Y: aqueous sodium ethanedioate (oxalate) (0.02 mol/dm³)", qty: "", notes: "" },
+            { name: "X: anhydrous sodium ethanedioate", qty: "1 g", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2000": [
+        {
+          title: "2000 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "X: anhydrous sodium ethanoate (acetate)", qty: "1.5 g", notes: "" },
+            { name: "Y: propanone (acetone)", qty: "a few drops in a stoppered tube", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2001": [
+        {
+          title: "2001 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "M: mixture of sodium chloride and copper(II) carbonate (1 : 2 by mass)", qty: "0.5 g", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2002": [
+        {
+          title: "2002 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "P: zinc powder", qty: "4 g", notes: "" },
+            { name: "Q: sodium nitrate", qty: "2 g", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2003": [
+        {
+          title: "2003 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Y: aqueous copper(II) sulfate (0.1 mol/dm³)", qty: "", notes: "" },
+            { name: "Solid X: ammonium sulfate", qty: "", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2004": [
+        {
+          title: "2004 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "P: ammonium iron(III) sulfate (NH4Fe(SO4)2·12H2O, 120 g/dm³)", qty: "", notes: "" },
+            { name: "Q: aqueous sodium hydroxide (1 mol/dm³)", qty: "", notes: "" },
+            { name: "S: aqueous sodium hydroxide (0.40 mol/dm³)", qty: "", notes: "" },
+            { name: "R: dilute hydrochloric acid (0.20 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2005": [
+        {
+          title: "2005 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Solid T: aluminium nitrate (Al(NO3)3·9H2O)", qty: "0.5 g", notes: "" },
+            { name: "Solution T: aqueous aluminium nitrate (0.10 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2006": [
+        {
+          title: "2006 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "A: aqueous copper(II) chloride (CuCl2·2H2O, 40 g/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2007": [
+        {
+          title: "2007 Science (Chemistry) 'O' Level Practical (unknowns only)", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Salt Q: zinc carbonate", qty: "0.5 g", notes: "" },
+          ],
+          apparatus: [
+          ],
+        },
+      ],
+      "5086|2008": [
+        {
+          title: "2008 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Salt T: potassium bromate (KBrO3)", qty: "", notes: "Please state the volume needed per student." },
+            { name: "Aqueous potassium iodide (0.2 mol/dm³)", qty: "", notes: "" },
+            { name: "Starch solution (2% w/v)", qty: "", notes: "" },
+            { name: "Aqueous silver nitrate (0.05 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 1],
+            ["Boiling tube", 1],
+            ["Dropper / teat pipette", 1],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 1],
+            ["Delivery tube", 1],
+            ["Stoppers (for test-tubes)", 1, "Rubber stopper"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2009": [
+        {
+          title: "2009 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Solid X: sodium hydrogencarbonate", qty: "", notes: "" },
+            { name: "Aqueous barium chloride (0.2 mol/dm³)", qty: "", notes: "" },
+            { name: "Aqueous silver nitrate (0.05 mol/dm³)", qty: "", notes: "" },
+            { name: "Aqueous copper(II) sulfate (0.5 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 1],
+            ["Boiling tube", 1],
+            ["Glass rod", 1],
+            ["Test-tube holder", 1],
+            ["Spatula", 1],
+            ["Dropper / teat pipette", 1],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 1],
+            ["Lighter", 1],
+            ["Bunsen burner", 1],
+            ["Wire gauze", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2010": [
+        {
+          title: "2010 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Salt X: iron(III) chloride (crystals)", qty: "1 vial/bench", notes: "" },
+            { name: "Solution Y: aqueous potassium bromate (10 g/dm³)", qty: "", notes: "" },
+            { name: "Granulated zinc", qty: "1 vial/bench", notes: "" },
+            { name: "Aqueous barium chloride (0.2 mol/dm³)", qty: "", notes: "" },
+            { name: "Aqueous silver nitrate (0.1 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 1],
+            ["Test-tube holder", 1],
+            ["Boiling tube", 1],
+            ["Stopper for boiling tube", 1, "Rubber stopper"],
+            ["Dropper / teat pipette", 1],
+            ["Spatula", 1],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 1],
+            ["Lighter", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2011": [
+        {
+          title: "2011 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Salt Q: ammonium iron(II) sulfate", qty: "1 vial/bench", notes: "" },
+            { name: "Magnesium ribbon (2 cm)", qty: "1 vial/bench", notes: "" },
+            { name: "Aqueous barium chloride (0.2 mol/dm³)", qty: "", notes: "" },
+            { name: "Aqueous silver nitrate", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Filter paper strips (3 cm × 1 cm)", 1, "Filter paper strips"],
+            ["Red and blue litmus paper", 1],
+            ["Glass rod", 1],
+            ["Wooden splints", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Filter papers", 1],
+            ["Spatula", 1],
+            ["Stopper for boiling tube", 1, "Rubber stopper"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2012": [
+        {
+          title: "2012 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Salt P: sodium nitrate", qty: "1 vial/bench", notes: "" },
+            { name: "Salt Q: ammonium chloride", qty: "1 vial/bench", notes: "" },
+            { name: "Solution P: aqueous sodium nitrate", qty: "100 cm³ bottle/bench", notes: "Dissolve 8.5 g of sodium nitrate in 1 dm³ of water." },
+            { name: "Solution Q: aqueous ammonium chloride", qty: "100 cm³ bottle", notes: "Dissolve 5.35 g of ammonium chloride in 1 dm³ of water." },
+            { name: "Solution R: aqueous ammonium nitrate", qty: "100 cm³ bottle", notes: "Dissolve 8 g of ammonium nitrate in 1 dm³ of water." },
+            { name: "Aluminium foil (2 cm × 2 cm)", qty: "", notes: "" },
+            { name: "Aqueous silver nitrate (0.05 mol/dm³)", qty: "", notes: "" },
+            { name: "Aqueous barium chloride (0.1 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 1],
+            ["Boiling tube", 1],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette", 1],
+            ["Spatula", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Wooden splints", 1],
+            ["Glass rod", 1],
+            ["Red and blue litmus paper", 1],
+            ["Bunsen burner", 1],
+            ["Wire gauze", 1],
+            ["Lighter", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2013": [
+        {
+          title: "2013 Science (Chemistry) Prelim Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Solid P: mixture of zinc carbonate and anhydrous sodium sulfate (1 : 1)", qty: "2 g (total) per student", notes: "" },
+            { name: "Aqueous barium nitrate (0.01 mol/dm³)", qty: "", notes: "Concentration as handwritten on the 2013 prelim prep list." },
+          ],
+          apparatus: [
+            ["Test tubes", 5],
+            ["Boiling tube", 2],
+            ["Test-tube holder", 1],
+            ["Spatula (plastic)", 1, "Spatula"],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Glass rod", 1],
+            ["Filter funnel", 1],
+            ["Filter papers", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Dropper / teat pipette", 2],
+            ["Wooden splints", 2],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Safety goggles", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2013 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Distilled water", qty: "", notes: "" },
+            { name: "Salt X: copper(II) carbonate", qty: "1 vial/bench", notes: "" },
+            { name: "Acid Y: dilute sulfuric acid", qty: "120 cm³/bench", notes: "Add 55 cm³ of concentrated sulfuric acid to 500 cm³ of distilled water. Stir continuously and top up to 1 dm³ with distilled water." },
+            { name: "Sodium chloride (solid)", qty: "1 vial/bench", notes: "" },
+            { name: "Magnesium ribbon (2 cm, clean)", qty: "1 vial/bench", notes: "" },
+            { name: "Aqueous barium nitrate (0.1 mol/dm³)", qty: "1 bottle/bench", notes: "" },
+            { name: "Aqueous silver nitrate (0.05 mol/dm³)", qty: "1 bottle/bench", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 1],
+            ["Test-tube rack", 1],
+            ["Stopper for test-tube", 1, "Rubber stopper"],
+            ["Beaker (100 cm³)", 1],
+            ["Dropper / teat pipette", 1],
+            ["Spatula", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Wooden splints", 1],
+            ["Glass rod", 1],
+            ["Red and blue litmus paper", 1],
+            ["Bunsen burner", 1],
+            ["Tripod + wire gauze", 1],
+            ["Lighter", 1],
+            ["Safety goggles", 1],
+            ["Sticker label 'solution Z'", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2014": [
+        {
+          title: "2014 Science (Chemistry) Prelim Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Salt R (identity not stated in source — please confirm)", qty: "", notes: "Small amount per test; heated strongly in a hard-glass test-tube." },
+            { name: "Solid S (identity not stated in source — please confirm)", qty: "", notes: "" },
+            { name: "Aqueous hydrogen peroxide", qty: "about 2 cm³ per candidate", notes: "" },
+            { name: "Distilled water", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 1],
+            ["Hard-glass test-tube", 1],
+            ["Test-tube rack", 1],
+            ["Test-tube holder", 1],
+            ["Spatula", 1],
+            ["Dropper / teat pipette", 1],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Wash bottle (distilled water)", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2014 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "2", "1", "2", "1", "saturated", "0.10", "0.05", null, null],
+          chemicals: [
+            { name: "Salt Q: calcium nitrate", qty: "about 0.3 g", notes: "Dispense into a stoppered small hard-glass test-tube (125 × 15 mm) labelled 'salt Q'." },
+            { name: "Salt Q: calcium nitrate", qty: "about 1.0 g", notes: "Dispense into a stoppered large test-tube or boiling tube (125 × 25 mm) labelled 'salt Q'." },
+            { name: "R: calcium hydroxide (limewater)", qty: "about 10 cm³ in vial B155", notes: "Place 5 g of R into a 500 cm³ beaker and half fill the beaker with deionised water. Stir the suspension and pour it into a 2.5 dm³ bottle. Fill the bottle with deionised water and shake it. Leave overnight to settle. When required, carefully decant solution R (without disturbing the sediment) into the vial labelled 'R'." },
+            { name: "Aluminium foil (1 cm × 1 cm)", qty: "2 pieces in vial B121", notes: "Cut from a clean roll of aluminium foil. Put into vial labelled 'aluminium foil'." },
+            { name: "Marble chips", qty: "about 10 g", notes: "Dispense into a large test-tube or boiling tube labelled 'marble chips'." },
+            { name: "Magnesium ribbon (2 cm, clean)", qty: "1 vial/bench", notes: "" },
+            { name: "Distilled water", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 6],
+            ["Test-tube rack", 1],
+            ["Test-tube holder (or tongs)", 1, "Test-tube holder"],
+            ["Dropper / teat pipette", 4],
+            ["Spatula", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Delivery tube (boiling-tube) — long enough to reach the bottom of a test-tube", 1, "Delivery tube (boiling-tube)"],
+            ["Wooden splints", 2],
+            ["Glass rod", 1],
+            ["Red and blue litmus paper", 1],
+            ["Bunsen burner", 1],
+            ["Tripod + wire gauze", 1],
+            ["Lighter", 1],
+            ["Safety goggles", 1],
+            ["Test-tube brush", 1],
+            ["Waste container (100 cm³, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2015": [
+        {
+          title: "2015 Science (Chemistry) Prelim Practical", candidates: 128, setsPerLab: 40,
+          chemicals: [
+            { name: "Solid P: zinc carbonate and ammonium chloride (2 : 1)", qty: "2 test-tubes per student", notes: "Place about 1 cm depth in each test-tube labelled 'solid P'. Test beforehand for CO2 and NH3 gas." },
+            { name: "Aqueous barium chloride", qty: "", notes: "" },
+            { name: "Magnesium strips", qty: "2 pieces per student", notes: "" },
+            { name: "Distilled water", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 6],
+            ["Stopper for test-tube", 1, "Rubber stopper"],
+            ["Delivery tube", 1],
+            ["Test-tube holder", 1],
+            ["Red and blue litmus paper", 1],
+            ["Filter papers", 1],
+            ["Filter funnel", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Dropper / teat pipette", 2],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+        {
+          title: "2015 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 26,
+          bench: ["2", "1", "1", "2", "2", "saturated", "0.10", "0.05", "0.02 (not acidified)", null],
+          chemicals: [
+            { name: "X: aqueous sodium sulfate (1 mol/dm³)", qty: "about 10 cm³ in vial B43", notes: "Dissolve 142 g of sodium sulfate in deionised water and make up to 1 dm³. Use a 250 cm³ dropping bottle." },
+            { name: "Y: aqueous sodium carbonate + sodium sulfate (1 mol/dm³ each)", qty: "about 10 cm³ in vial B43", notes: "Dissolve 106 g of Y(a) sodium carbonate and 142 g of Y(b) sodium sulfate in deionised water and make up to 1 dm³. Prepare on the day of the exam. Use a 250 cm³ dropping bottle." },
+            { name: "Z: aqueous sodium carbonate (1 mol/dm³)", qty: "about 10 cm³ in vial B43", notes: "Dissolve 106 g of sodium carbonate in deionised water and make up to 1 dm³. Use a 250 cm³ dropping bottle." },
+            { name: "P: aqueous ammonium iron(II) sulfate (0.5 mol/dm³)", qty: "about 10 cm³ in vial B43", notes: "Dissolve 196 g of ammonium iron(II) sulfate in deionised water and make up to 1 dm³. Use a 250 cm³ dropping bottle." },
+            { name: "Deionised water", qty: "at least 250 cm³ per candidate", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 6],
+            ["Test-tube rack", 1],
+            ["Boiling tube", 2],
+            ["Test-tube holder (or tongs)", 1, "Test-tube holder"],
+            ["Dropper / teat pipette (plastic)", 6, "Dropper / teat pipette"],
+            ["Spatula", 1],
+            ["Wash bottle (distilled water)", 1],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Delivery tube (test-tube)", 1],
+            ["Glass rod", 1],
+            ["Red and blue litmus paper (at least 3 pieces each)", 1, "Red and blue litmus paper"],
+            ["Bunsen burner", 1],
+            ["Tripod + wire gauze", 1],
+            ["Lighter", 1],
+            ["Safety goggles", 1],
+            ["Test-tube brush", 1],
+            ["Pen for writing on glass", 1, "Marker pen"],
+            ["Waste container (100 cm³, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2016": [
+        {
+          title: "2016 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          bench: ["2", "1", "0.5", "1", "1", "saturated", "0.20", "0.05", "0.02", "1 cm × 1 cm"],
+          chemicals: [
+            { name: "P: aqueous silver nitrate", qty: "15 cm³ in vial B155", notes: "Dissolve 51 g of silver nitrate in deionised water and make up to 1 dm³. Dispense into capped vial labelled 'P'." },
+            { name: "Q: aqueous sodium carbonate", qty: "15 cm³ in vial B155", notes: "Dissolve 53 g of sodium carbonate in deionised water and make up to 1 dm³. Dispense into capped vial labelled 'Q'." },
+            { name: "R: dilute hydrochloric acid", qty: "15 cm³ in vial B155", notes: "*Highly corrosive — cautiously pour 85 cm³ of concentrated hydrochloric acid into 800 cm³ of deionised water with continuous stirring and make up to 1 dm³. Dispense into capped vial labelled 'R'." },
+            { name: "Aqueous copper(II) sulfate", qty: "15 cm³ in vial B155", notes: "Dissolve 125 g of CuSO4·5H2O in deionised water and make up to 1 dm³. Dispense into capped vial labelled 'copper(II) sulfate'." },
+            { name: "Deionised water", qty: "at least 150 cm³ per candidate", notes: "" },
+          ],
+          apparatus: [
+            ["Test tubes", 6],
+            ["Test-tube rack", 1],
+            ["Boiling tube", 3],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette (plastic)", 6, "Dropper / teat pipette"],
+            ["Beaker (100 cm³, glass)", 1, "Beaker (100 cm³)"],
+            ["Delivery tube fitted with rubber stopper (test-tube)", 1, "Delivery tube (test-tube)"],
+            ["Spatula", 1],
+            ["Glass rod", 1],
+            ["Heatproof mat (or a 2nd wire gauze)", 1, "Heatproof mat"],
+            ["Tripod + wire gauze", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 2],
+            ["Filter paper strips (same size as litmus paper)", 2, "Filter paper strips"],
+            ["Wash bottle (distilled water)", 1],
+            ["Safety goggles", 1],
+            ["Test-tube brush", 1],
+            ["Pen for writing on glass", 1, "Marker pen"],
+            ["Waste container (100 cm³, labelled 'waste')", 1, "Waste container (labelled 'waste')"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2017": [
+        {
+          title: "2017 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Unknown X: aqueous sodium carbonate (0.5 mol/dm³)", qty: "", notes: "" },
+            { name: "Unknown Y: aqueous ammonium iron(II) sulfate, (NH4)2Fe(SO4)2 (0.5 mol/dm³)", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Test-tube rack", 1],
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette", 3],
+            ["Boiling tube", 2],
+            ["Test tubes", 6],
+            ["Red and blue litmus paper", 1],
+            ["Wooden splints", 2],
+            ["Measuring cylinder (10 ml)", 1, "Measuring cylinder"],
+            ["Beaker (100 cm³)", 1],
+            ["Filter funnel", 1],
+            ["Filter papers", 1],
+            ["Glass rod", 1],
+            ["Spatula", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2018": [
+        {
+          title: "2018 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Q: aqueous iron(III) nitrate", qty: "", notes: "" },
+            { name: "R: aqueous sodium carbonate", qty: "", notes: "" },
+            { name: "Granulated zinc", qty: "3 pieces", notes: "" },
+            { name: "Aluminium foil", qty: "2 pieces", notes: "" },
+          ],
+          apparatus: [
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette", 3],
+            ["Boiling tube", 2],
+            ["Test tubes", 6],
+            ["Red and blue litmus paper", 1],
+            ["Wooden splints", 2],
+            ["Test-tube rack", 2],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2019": [
+        {
+          title: "2019 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "W: aqueous hydrogen peroxide", qty: "", notes: "" },
+            { name: "X: aqueous potassium iodide", qty: "", notes: "" },
+            { name: "Y: aqueous potassium manganate(VII)", qty: "", notes: "" },
+            { name: "Distilled water", qty: "", notes: "" },
+          ],
+          apparatus: [
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test-tube holder", 1],
+            ["Dropper / teat pipette", 3],
+            ["Test tubes", 6],
+            ["Wooden splints", 2],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2020": [
+        {
+          title: "2020 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Solid P: sodium hydrogencarbonate", qty: "1 blue spatula", notes: "" },
+            { name: "Q: aqueous copper(II) chloride (85.2 g/dm³)", qty: "", notes: "" },
+            { name: "R1: aqueous sodium hydrogencarbonate (16.8 g/dm³)", qty: "", notes: "" },
+            { name: "R2: aqueous sodium hydrogencarbonate (8.4 g/dm³)", qty: "", notes: "" },
+            { name: "I: screened methyl orange", qty: "3 cm³ per student in vial B121", notes: "" },
+          ],
+          apparatus: [
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test tubes (one labelled R1 and one labelled R2)", 7, "Test tubes"],
+            ["Dropper / teat pipette", 6],
+            ["Wooden splints", 1],
+            ["Red and blue litmus paper", 1],
+            ["Measuring cylinder (10 ml)", 2, "Measuring cylinder"],
+            ["Glass rod", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Boiling tube", 2],
+            ["Stopwatch", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2021": [
+        {
+          title: "2021 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "S: aqueous ammonium iron(III) sulfate (96.4 g/dm³)", qty: "30 cm³", notes: "" },
+            { name: "Zinc powder", qty: "0.9 g to 1.1 g", notes: "" },
+          ],
+          apparatus: [
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test tubes", 6],
+            ["Dropper / teat pipette", 6],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 1],
+            ["Measuring cylinder (10 ml)", 2, "Measuring cylinder"],
+            ["Glass rod", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Delivery tube (boiling-tube)", 1],
+            ["Boiling tube", 2],
+            ["Stopwatch", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2022": [
+        {
+          title: "2022 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "Solution P (vial)", qty: "1", notes: "" },
+            { name: "Solution P (bottle)", qty: "1", notes: "" },
+            { name: "Solution Q (bottle)", qty: "1", notes: "" },
+          ],
+          apparatus: [
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test tubes", 6],
+            ["Dropper / teat pipette", 6],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 1],
+            ["Measuring cylinder (25 ml)", 2, "Measuring cylinder"],
+            ["Glass rod", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Filter funnel", 1],
+            ["Burette + burette clamp and stand", 1],
+            ["Pipette (25.0 cm³) + pipette filler", 1],
+            ["Conical flask (250 cm³)", 2],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2023": [
+        {
+          title: "2023 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "A (in two stoppered boiling tubes)", qty: "1", notes: "" },
+            { name: "B (vial)", qty: "1", notes: "" },
+            { name: "C (vial)", qty: "1", notes: "" },
+            { name: "Dilute hydrochloric acid (HCl)", qty: "1", notes: "" },
+          ],
+          apparatus: [
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test tubes", 6],
+            ["Dropper / teat pipette", 6],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 1],
+            ["Delivery tube (test-tube)", 1],
+            ["Delivery tube (boiling-tube)", 1],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
+      "5086|2024": [
+        {
+          title: "2024 Science (Chemistry) 'O' Level Practical", candidates: 40, setsPerLab: 40,
+          chemicals: [
+            { name: "W: mixture of 0.5 mol/dm³ HCl and 0.5 mol/dm³ HNO3", qty: "1", notes: "" },
+            { name: "X: aqueous iron(III) chloride (FeCl3)", qty: "1", notes: "" },
+            { name: "Y: aqueous potassium iodide (KI)", qty: "1", notes: "" },
+            { name: "T: aqueous sodium thiosulfate (Na2S2O3)", qty: "1", notes: "" },
+            { name: "S: starch solution", qty: "1", notes: "" },
+          ],
+          apparatus: [
+            ["Bunsen burner", 1],
+            ["Lighter", 1],
+            ["Test tubes", 3],
+            ["Boiling tube", 1],
+            ["Dropper / teat pipette", 5],
+            ["Wooden splints", 2],
+            ["Red and blue litmus paper", 1],
+            ["Glass rod", 1],
+            ["Test-tube holder", 1],
+            ["Stopwatch", 1],
+            ["Measuring cylinder (25 ml)", 2, "Measuring cylinder"],
+          ],
+          safety: [true, true, true, false, false, false],
+          precautions: [true, true, false, false]
+        },
+      ],
     };
     /* ======================= end CONFIG ======================= */
 
@@ -1061,19 +2223,16 @@
     }
     function loadExperiment(exp) {
       document.getElementById("expTitle").value = exp.title;
-      document.getElementById("numCandidates").value = exp.candidates;
-      document.getElementById("setsPerLab").value = exp.setsPerLab;
+      document.getElementById("numCandidates").value = exp.candidates || 40;
+      document.getElementById("setsPerLab").value = exp.setsPerLab || 40;
+      setBench(exp.bench);
       document.getElementById("chemList").innerHTML = "";
       exp.chemicals.forEach(c => addChem(c));
-      document.getElementById("apBody").innerHTML = "";
-      document.querySelectorAll("#apGrid input").forEach(cb => cb.checked = false);
-      exp.apparatus.forEach(([name, qty]) => {
-        addApparatusRow(name, qty);
-        const cb = [...document.querySelectorAll("#apGrid input")].find(c => c.dataset.name === name);
-        if (cb) cb.checked = true;
-      });
-      exp.safety.forEach((v, i) => setToggle("saf", i, v));
-      exp.precautions.forEach((v, i) => setToggle("prec", i, v));
+      if (!exp.chemicals.length) addChem();
+      loadApparatus(exp.apparatus);
+      clearToggles();
+      (exp.safety || []).forEach((v, i) => setToggle("saf", i, v));
+      (exp.precautions || []).forEach((v, i) => setToggle("prec", i, v));
       recalcAll();
     }
 
@@ -1109,7 +2268,34 @@
    </tr>`).join("");
     }
 
+    /* Apply a preset's bench concentrations (array in BENCH_REAGENTS order; null = not used). No array = defaults. */
+    function setBench(list) {
+      document.querySelectorAll("#benchBody tr").forEach((tr, i) => {
+        const v = list ? list[i] : BENCH_REAGENTS[i].conc;
+        tr.querySelector(".benchUse").checked = v !== null && v !== undefined;
+        tr.querySelector(".benchConc").value = (v === null || v === undefined) ? BENCH_REAGENTS[i].conc : v;
+      });
+    }
+
     /* ---------- Apparatus ---------- */
+    /* Rows are [name, qty] or [name, qty, tick-box name]. A row whose name is in APPARATUS_MASTER ticks its own box. */
+    function apMaster(name, master) {
+      if (master && APPARATUS_MASTER.includes(master)) return master;
+      if (APPARATUS_MASTER.includes(name)) return name;
+      if (/^Measuring cylinder\b/.test(name)) return "Measuring cylinder";
+      return null;
+    }
+    function loadApparatus(list) {
+      document.getElementById("apBody").innerHTML = "";
+      document.querySelectorAll("#apGrid input").forEach(cb => cb.checked = false);
+      (list || []).forEach(a => {
+        const name = Array.isArray(a) ? a[0] : a.name, qty = Array.isArray(a) ? a[1] : a.qty, m = Array.isArray(a) ? a[2] : a.master;
+        const master = apMaster(name, m);
+        addApparatusRow(name, qty, master);
+        const cb = master && [...document.querySelectorAll("#apGrid input")].find(c => c.dataset.name === master);
+        if (cb) cb.checked = true;
+      });
+    }
     function buildApparatusGrid() {
       const g = document.getElementById("apGrid");
       APPARATUS_MASTER.forEach(name => {
@@ -1123,14 +2309,17 @@
         g.appendChild(l);
       });
     }
-    function addApparatusRow(name, qty) {
+    function addApparatusRow(name, qty, master) {
       const tr = document.createElement("tr");
-      tr.dataset.name = name;
+      tr.dataset.name = master || name;
       let nameCell;
-      if (name === "Measuring cylinder") {
-        nameCell = `<td><input type="text" value="Measuring cylinder (25 ml)">
+      if ((master || name) === "Measuring cylinder") {
+        const shown = name === "Measuring cylinder" ? "Measuring cylinder (25 ml)" : name;
+        const size = (shown.match(/\((\d+) ?ml\)/i) || [])[1];
+        const opt = s => `<option${size === s ? " selected" : ""}>${s} ml</option>`;
+        nameCell = `<td><input type="text" value="${shown.replace(/"/g, "&quot;")}">
       <select onchange="this.previousElementSibling.value='Measuring cylinder ('+this.value+')'" style="margin-top:4px;min-height:38px">
-        <option>10 ml</option><option selected>25 ml</option><option>50 ml</option><option>100 ml</option>
+        ${size ? "" : "<option selected disabled>Size…</option>"}${opt("10")}${opt("25")}${opt("50")}${opt("100")}
       </select></td>`;
       } else {
         nameCell = `<td><input type="text" value="${name.replace(/"/g, "&quot;")}"></td>`;
@@ -1187,6 +2376,9 @@
       if (!g) return;
       g.querySelectorAll("button").forEach(b => b.classList.remove("on"));
       g.querySelector(yes ? ".yes" : ".na").classList.add("on");
+    }
+    function clearToggles() {
+      document.querySelectorAll(".tog button").forEach(b => b.classList.remove("on"));
     }
     function getToggle(prefix, i) {
       const g = document.querySelector(`.tog[data-group="${prefix}${i}"]`);
@@ -1259,7 +2451,7 @@
         chems: [...document.querySelectorAll("#chemList .chemItem")].map(c => ({
           name: c.querySelector(".cName").value, qty: c.querySelector(".cQty").value, notes: c.querySelector(".cNotes").value
         })),
-        apparatus: [...document.querySelectorAll("#apBody tr")].map(r => [r.querySelector("td:nth-child(2) input").value, r.querySelector("td:nth-child(3) input").value]),
+        apparatus: [...document.querySelectorAll("#apBody tr")].map(r => [r.querySelector("td:nth-child(2) input").value, r.querySelector("td:nth-child(3) input").value, r.dataset.name]),
         safety: SAFETY_ITEMS.map((_, i) => getToggle("saf", i)),
         precautions: PREC_ITEMS.map((_, i) => getToggle("prec", i)),
         safetyOther: document.getElementById("safetyOther").value,
@@ -1303,14 +2495,8 @@
       }
       document.getElementById("chemList").innerHTML = "";
       (d.chems || []).forEach(c => addChem(c));
-      document.getElementById("apBody").innerHTML = "";
-      document.querySelectorAll("#apGrid input").forEach(cb => cb.checked = false);
-      (d.apparatus || []).forEach(a => {
-        const name = Array.isArray(a) ? a[0] : a.name, qty = Array.isArray(a) ? a[1] : a.qty;
-        addApparatusRow(name, qty);
-        const cb = [...document.querySelectorAll("#apGrid input")].find(c => c.dataset.name === name);
-        if (cb) cb.checked = true;
-      });
+      loadApparatus(d.apparatus);
+      clearToggles();
       (d.safety || []).forEach((v, i) => { if (v) setToggle("saf", i, v === "yes"); });
       (d.precautions || []).forEach((v, i) => { if (v) setToggle("prec", i, v === "yes"); });
       document.getElementById("safetyOther").value = d.safetyOther || "";
